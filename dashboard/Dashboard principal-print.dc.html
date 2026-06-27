@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/styles.css">
+  <script src="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/_ds_bundle.js"></script>
+  <script src="proto.js"></script>
+  <style>
+    *{box-sizing:border-box;}
+    html,body{margin:0;}
+    .navd{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:8px;color:var(--on-dark-soft);font-family:var(--font-body);font-size:14px;font-weight:500;text-decoration:none;cursor:pointer;border-left:3px solid transparent;transition:background .12s,color .12s;}
+    .navd:hover{background:rgba(250,249,245,0.06);color:var(--on-dark);}
+    .card{background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;}
+  </style>
+
+  <style id="__print-css">
+    @page { size: A4 landscape; margin: 8mm; }
+    @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      html, body { background: #fff !important; margin: 0 !important; }
+    }
+  </style>
+  <script>
+  addEventListener('load', () => { (async () => {
+    try { await document.fonts.ready; } catch(e){}
+    // wait for the DC to render real content
+    const start = Date.now();
+    await new Promise(res => {
+      const tick = () => {
+        const dc = document.querySelector('x-dc');
+        const ok = dc && dc.getBoundingClientRect().height > 200;
+        if (ok || Date.now() - start > 8000) res(); else setTimeout(tick, 120);
+      };
+      tick();
+    });
+    const imgs = Array.from(document.images).filter(i => !i.complete);
+    await Promise.race([
+      Promise.allSettled(imgs.map(i => i.decode().catch(()=>{}))),
+      new Promise(r => setTimeout(r, 6000)),
+    ]);
+    // fit width to the printable A4-landscape column (~1080px @96dpi minus margins)
+    const root = document.querySelector('x-dc');
+    if (root) {
+      const w = root.scrollWidth || document.body.scrollWidth;
+      const target = 1060;
+      if (w > target) document.body.style.zoom = (target / w).toFixed(4);
+      // release forced full-viewport heights so the page can flow
+      document.querySelectorAll('[style*="100vh"]').forEach(el => {
+        el.style.minHeight = '0';
+        el.style.height = 'auto';
+      });
+    }
+    setTimeout(() => window.print(), 600);
+  })(); });
+  </script>
+
+</helmet>
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<rect width="100" height="100" fill="#181715"/>
+<circle cx="50" cy="44" r="8.5" fill="#cc785c"/>
+<g stroke="#cc785c" stroke-width="2.4" stroke-linecap="round">
+<line x1="50" y1="31" x2="50" y2="27"/><line x1="50" y1="57" x2="50" y2="61"/><line x1="63" y1="44" x2="67" y2="44"/><line x1="37" y1="44" x2="33" y2="44"/><line x1="59.2" y1="34.8" x2="62" y2="32"/><line x1="40.8" y1="53.2" x2="38" y2="56"/><line x1="40.8" y1="34.8" x2="38" y2="32"/><line x1="59.2" y1="53.2" x2="62" y2="56"/>
+</g>
+<rect x="34" y="70" width="9" height="8" rx="2" fill="#5db8a6"/><rect x="45.5" y="66" width="9" height="12" rx="2" fill="#e8a55a"/><rect x="57" y="72" width="9" height="6" rx="2" fill="#cc785c"/>
+<text x="50" y="90" text-anchor="middle" fill="#faf9f5" font-family="Georgia,serif" font-size="7">Lumière du Soleil</text>
+</svg>
+</template>
+
+<div style="display:flex;min-height:100vh;background:var(--canvas);font-family:var(--font-body);">
+
+  <!-- sidebar -->
+  <aside style="width:240px;flex:none;background:var(--surface-dark);display:flex;flex-direction:column;padding:22px 16px;position:sticky;top:0;height:100vh;">
+    <div style="display:flex;align-items:center;gap:11px;padding:0 8px 24px;">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.3" fill="#cc785c"/><g stroke="#cc785c" stroke-width="1.7" stroke-linecap="round"><line x1="12" y1="1.6" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.4"/><line x1="1.6" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.4" y2="12"/><line x1="4.5" y1="4.5" x2="6.2" y2="6.2"/><line x1="17.8" y1="17.8" x2="19.5" y2="19.5"/><line x1="19.5" y1="4.5" x2="17.8" y2="6.2"/><line x1="6.2" y1="17.8" x2="4.5" y2="19.5"/></g></svg>
+      <div><div style="font-family:var(--font-display);font-size:17px;color:var(--on-dark);line-height:1.1;">Lumière du Soleil</div><div style="font-size:11px;color:var(--on-dark-soft);letter-spacing:.3px;">Suivi-évaluation</div></div>
+    </div>
+    <nav style="display:flex;flex-direction:column;gap:2px;">
+      <a class="navd" style="background:rgba(204,120,92,0.18);color:var(--on-dark);border-left-color:var(--coral);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Synthèse</a>
+      <a class="navd"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Projets</a>
+      <a class="navd"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-4 3 3 4-6"/></svg>Indicateurs</a>
+      <a class="navd"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Saisie réalisation</a>
+      <a class="navd"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h6"/></svg>Rapports</a>
+      <a class="navd"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5l-8.6 8.6a4 4 0 0 1-5.7-5.7l8.6-8.6a2.5 2.5 0 0 1 3.5 3.5l-8.5 8.5a1 1 0 0 1-1.4-1.4l7.8-7.8"/></svg>Sources de vérification</a>
+      <a class="navd"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>Calendrier</a>
+    </nav>
+    <div style="margin-top:24px;padding-top:18px;border-top:1px solid rgba(250,249,245,0.08);">
+      <a class="navd"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Paramètres</a>
+    </div>
+    <div style="margin-top:auto;display:flex;align-items:center;gap:10px;padding:11px;background:var(--surface-dark-elevated);border-radius:10px;">
+      <div style="width:34px;height:34px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;">AD</div>
+      <div style="min-width:0;"><div style="font-size:13px;font-weight:600;color:var(--on-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Aïssata Diallo</div><div style="font-size:11px;color:var(--on-dark-soft);">Coordinatrice</div></div>
+    </div>
+  </aside>
+
+  <!-- main -->
+  <main style="flex:1;min-width:0;padding:28px 36px;max-width:1400px;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:26px;flex-wrap:wrap;">
+      <div>
+        <h1 style="font-family:var(--font-display);font-weight:400;font-size:32px;letter-spacing:-.5px;color:var(--ink);margin:0;">Synthèse</h1>
+        <p style="font-size:14px;color:var(--muted);margin:5px 0 0;">Vue d'ensemble du portefeuille — 2ᵉ trimestre 2026</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="display:flex;background:var(--surface-soft);border:1px solid var(--hairline);border-radius:9px;padding:3px;font-size:13px;">
+          <span data-role="coord" style="padding:6px 13px;border-radius:6px;background:#fff;color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.05);cursor:pointer;">Coordinateur</span>
+          <span data-role="dir" style="padding:6px 13px;border-radius:6px;color:var(--muted);cursor:pointer;">Directeur</span>
+          <span data-role="eval" style="padding:6px 13px;border-radius:6px;color:var(--muted);cursor:pointer;">Évaluateur</span>
+        </div>
+        <button style="display:flex;align-items:center;gap:7px;background:var(--coral);color:#fff;border:none;border-radius:8px;padding:9px 16px;font-family:var(--font-body);font-size:14px;font-weight:500;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>Exporter le rapport</button>
+      </div>
+    </div>
+
+    <!-- KPI row -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px;">
+      <div class="card" style="padding:18px 20px;display:flex;align-items:center;gap:16px;">
+        <div style="width:84px;height:84px;flex:none;border-radius:50%;background:conic-gradient(#cc785c 0 74%, var(--surface-card) 74% 100%);display:flex;align-items:center;justify-content:center;">
+          <div style="width:62px;height:62px;border-radius:50%;background:#fffdfa;display:flex;align-items:center;justify-content:center;"><span style="font-family:var(--font-display);font-size:22px;color:var(--coral);">74%</span></div>
+        </div>
+        <div><div style="font-size:11.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);font-weight:600;line-height:1.3;">Taux de réalisation global</div><div style="font-size:13px;color:#3f8a52;margin-top:6px;font-weight:500;">▲ +3 pts depuis le T1</div></div>
+      </div>
+      <div class="card" style="padding:18px 20px;">
+        <div style="font-size:11.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);font-weight:600;">Projets actifs</div>
+        <div style="font-family:var(--font-display);font-size:40px;color:var(--ink);line-height:1.1;margin-top:8px;">5</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px;">sur 5 financés</div>
+      </div>
+      <div class="card" style="padding:18px 20px;">
+        <div style="font-size:11.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);font-weight:600;">Indicateurs suivis</div>
+        <div style="font-family:var(--font-display);font-size:40px;color:var(--ink);line-height:1.1;margin-top:8px;">98</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px;">51 atteints · 32 à surveiller</div>
+      </div>
+      <div class="card" style="padding:18px 20px;">
+        <div style="font-size:11.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);font-weight:600;">Indicateurs en alerte</div>
+        <div style="font-family:var(--font-display);font-size:40px;color:#b23b3b;line-height:1.1;margin-top:8px;">15</div>
+        <div style="font-size:13px;color:#b23b3b;margin-top:4px;">&lt; 70 % de la cible</div>
+      </div>
+    </div>
+
+    <!-- row 2 : bars + donut -->
+    <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:16px;">
+      <div class="card" style="padding:22px 24px;">
+        <div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:18px;">Avancement par projet</div>
+        <div style="display:flex;flex-direction:column;gap:15px;">
+          <div style="display:flex;align-items:center;gap:14px;"><span style="width:200px;flex:none;font-size:14px;color:var(--ink);">Forêts &amp; climat <span style="color:var(--muted);">· F. Ndiaye</span></span><div style="flex:1;height:20px;border-radius:6px;background:var(--surface-card);"><div style="width:91%;height:100%;border-radius:6px;background:#5db872;"></div></div><span style="width:40px;text-align:right;font-weight:600;font-size:14px;">91 %</span></div>
+          <div style="display:flex;align-items:center;gap:14px;"><span style="width:200px;flex:none;font-size:14px;color:var(--ink);">Maraîchage durable <span style="color:var(--muted);">· A. Diallo</span></span><div style="flex:1;height:20px;border-radius:6px;background:var(--surface-card);"><div style="width:82%;height:100%;border-radius:6px;background:#5db872;"></div></div><span style="width:40px;text-align:right;font-weight:600;font-size:14px;">82 %</span></div>
+          <div style="display:flex;align-items:center;gap:14px;"><span style="width:200px;flex:none;font-size:14px;color:var(--ink);">École &amp; enfance <span style="color:var(--muted);">· M. Koné</span></span><div style="flex:1;height:20px;border-radius:6px;background:var(--surface-card);"><div style="width:76%;height:100%;border-radius:6px;background:#e8a55a;"></div></div><span style="width:40px;text-align:right;font-weight:600;font-size:14px;">76 %</span></div>
+          <div style="display:flex;align-items:center;gap:14px;"><span style="width:200px;flex:none;font-size:14px;color:var(--ink);">Pisciculture villageoise <span style="color:var(--muted);">· M. Traoré</span></span><div style="flex:1;height:20px;border-radius:6px;background:var(--surface-card);"><div style="width:68%;height:100%;border-radius:6px;background:#e8a55a;"></div></div><span style="width:40px;text-align:right;font-weight:600;font-size:14px;">68 %</span></div>
+          <div style="display:flex;align-items:center;gap:14px;"><span style="width:200px;flex:none;font-size:14px;color:var(--ink);">Microentreprises jeunes <span style="color:var(--muted);">· I. Sow</span></span><div style="flex:1;height:20px;border-radius:6px;background:var(--surface-card);"><div style="width:54%;height:100%;border-radius:6px;background:#c64545;"></div></div><span style="width:40px;text-align:right;font-weight:600;font-size:14px;color:#b23b3b;">54 %</span></div>
+        </div>
+      </div>
+      <div class="card" style="padding:22px 24px;">
+        <div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:18px;">Répartition par statut</div>
+        <div style="display:flex;align-items:center;gap:22px;">
+          <div style="width:124px;height:124px;flex:none;border-radius:50%;background:conic-gradient(#5db872 0 52%, #e8a55a 52% 84.7%, #c64545 84.7% 100%);display:flex;align-items:center;justify-content:center;">
+            <div style="width:78px;height:78px;border-radius:50%;background:#fffdfa;display:flex;flex-direction:column;align-items:center;justify-content:center;"><span style="font-family:var(--font-display);font-size:26px;color:var(--ink);line-height:1;">98</span><span style="font-size:10.5px;color:var(--muted);">indicateurs</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:13px;flex:1;">
+            <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink);"><span style="width:10px;height:10px;border-radius:3px;background:#5db872;"></span>Atteint</span><span style="font-weight:600;font-size:13.5px;">51</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink);"><span style="width:10px;height:10px;border-radius:3px;background:#e8a55a;"></span>À surveiller</span><span style="font-weight:600;font-size:13.5px;">32</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink);"><span style="width:10px;height:10px;border-radius:3px;background:#c64545;"></span>En retard</span><span style="font-weight:600;font-size:13.5px;">15</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- row 3 : trend + alerts -->
+    <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:16px;margin-bottom:16px;">
+      <div class="card" style="padding:22px 24px;">
+        <div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:2px;">Tendance du taux global</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">Janvier → Juin 2026 · cible 100 %</div>
+        <svg viewBox="0 0 340 120" style="width:100%;height:140px;overflow:visible;">
+          <line x1="0" y1="20" x2="340" y2="20" stroke="#ebe6df" stroke-width="1"/>
+          <line x1="0" y1="60" x2="340" y2="60" stroke="#ebe6df" stroke-width="1"/>
+          <line x1="0" y1="100" x2="340" y2="100" stroke="#ebe6df" stroke-width="1"/>
+          <polygon points="0,82 68,73 136,66 204,55 272,50 340,41 340,100 0,100" fill="rgba(204,120,92,0.10)"/>
+          <polyline points="0,82 68,73 136,66 204,55 272,50 340,41" fill="none" stroke="#cc785c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="340" cy="41" r="4.5" fill="#cc785c"/>
+        </svg>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px;"><span>Jan</span><span>Fév</span><span>Mar</span><span>Avr</span><span>Mai</span><span>Juin</span></div>
+      </div>
+      <div class="card" style="padding:22px 24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--ink);">Indicateurs en alerte</div><a style="font-size:13px;color:var(--coral);font-weight:500;text-decoration:none;cursor:pointer;">Voir les 15 →</a></div>
+        <div style="display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--hairline-soft);"><div><div style="font-size:14px;color:var(--ink);font-weight:500;">Jeunes formés en gestion</div><div style="font-size:12px;color:var(--muted);">Microentreprises jeunes · écart −52 %</div></div><span style="font-size:12.5px;font-weight:600;color:#b23b3b;background:rgba(198,69,69,.12);padding:4px 10px;border-radius:20px;">48 %</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--hairline-soft);"><div><div style="font-size:14px;color:var(--ink);font-weight:500;">Consultations santé réalisées</div><div style="font-size:12px;color:var(--muted);">École &amp; enfance · écart −42 %</div></div><span style="font-size:12.5px;font-weight:600;color:#b23b3b;background:rgba(198,69,69,.12);padding:4px 10px;border-radius:20px;">58 %</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--hairline-soft);"><div><div style="font-size:14px;color:var(--ink);font-weight:500;">Microcrédits décaissés</div><div style="font-size:12px;color:var(--muted);">Microentreprises jeunes · écart −39 %</div></div><span style="font-size:12.5px;font-weight:600;color:#b23b3b;background:rgba(198,69,69,.12);padding:4px 10px;border-radius:20px;">61 %</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;"><div><div style="font-size:14px;color:var(--ink);font-weight:500;">Étangs piscicoles fonctionnels</div><div style="font-size:12px;color:var(--muted);">Pisciculture villageoise · écart −36 %</div></div><span style="font-size:12.5px;font-weight:600;color:#b23b3b;background:rgba(198,69,69,.12);padding:4px 10px;border-radius:20px;">64 %</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- échéances band -->
+    <div style="background:var(--surface-dark);border-radius:12px;padding:22px 24px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;"><div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--on-dark);">Échéances à venir</div><a data-nav="Calendrier Gantt.dc.html" style="font-size:13px;color:#e88a6c;font-weight:500;text-decoration:none;cursor:pointer;">Voir le calendrier →</a></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;">
+        <div style="display:flex;gap:13px;align-items:flex-start;"><div style="flex:none;width:48px;text-align:center;"><div style="font-family:var(--font-display);font-size:22px;color:#e88a6c;line-height:1;">30</div><div style="font-size:10px;color:var(--on-dark-soft);text-transform:uppercase;letter-spacing:.5px;">Juin</div></div><div><div style="font-size:14px;color:var(--on-dark);font-weight:500;">Rapport semestriel S1</div><div style="font-size:12px;color:var(--on-dark-soft);margin-top:2px;">Forêts &amp; climat</div></div></div>
+        <div style="display:flex;gap:13px;align-items:flex-start;"><div style="flex:none;width:48px;text-align:center;"><div style="font-family:var(--font-display);font-size:22px;color:var(--on-dark);line-height:1;">05</div><div style="font-size:10px;color:var(--on-dark-soft);text-transform:uppercase;letter-spacing:.5px;">Juil</div></div><div><div style="font-size:14px;color:var(--on-dark);font-weight:500;">Mission d'évaluation externe</div><div style="font-size:12px;color:var(--on-dark-soft);margin-top:2px;">Microentreprises jeunes</div></div></div>
+        <div style="display:flex;gap:13px;align-items:flex-start;"><div style="flex:none;width:48px;text-align:center;"><div style="font-family:var(--font-display);font-size:22px;color:var(--on-dark);line-height:1;">12</div><div style="font-size:10px;color:var(--on-dark-soft);text-transform:uppercase;letter-spacing:.5px;">Juil</div></div><div><div style="font-size:14px;color:var(--on-dark);font-weight:500;">Comité de pilotage trimestriel</div><div style="font-size:12px;color:var(--on-dark-soft);margin-top:2px;">Tous les projets</div></div></div>
+        <div style="display:flex;gap:13px;align-items:flex-start;"><div style="flex:none;width:48px;text-align:center;"><div style="font-family:var(--font-display);font-size:22px;color:var(--on-dark);line-height:1;">20</div><div style="font-size:10px;color:var(--on-dark-soft);text-transform:uppercase;letter-spacing:.5px;">Juil</div></div><div><div style="font-size:14px;color:var(--on-dark);font-weight:500;">Clôture collecte terrain T2</div><div style="font-size:12px;color:var(--on-dark-soft);margin-top:2px;">Maraîchage durable</div></div></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+</x-dc>
+</body>
+</html>

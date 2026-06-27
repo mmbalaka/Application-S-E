@@ -1,0 +1,52 @@
+/* ──────────────────────────────────────────────────────────────
+   Colors — Claude / Anthropic warm-editorial palette
+   Base hues first, then semantic aliases. Reference semantic
+   aliases in components; never inline hex.
+   ────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Brand & accent ─────────────────────────────── */
+  --coral: #cc785c;            /* signature Anthropic warm coral */
+  --coral-active: #a9583e;     /* press / darker variant */
+  --coral-disabled: #e6dfd8;   /* desaturated cream-tinted */
+  --accent-teal: #5db8a6;
+  --accent-amber: #e8a55a;
+
+  /* ── Surfaces ───────────────────────────────────── */
+  --canvas: #faf9f5;               /* default tinted-cream floor */
+  --surface-soft: #f5f0e8;         /* soft band background */
+  --surface-card: #efe9de;         /* feature / content cards */
+  --surface-cream-strong: #e8e0d2; /* selected tabs, emphasized bands */
+  --surface-dark: #181715;         /* code mockups, footer */
+  --surface-dark-elevated: #252320;/* elevated cards on dark */
+  --surface-dark-soft: #1f1e1b;    /* code-block background on dark */
+
+  /* ── Hairlines ──────────────────────────────────── */
+  --hairline: #e6dfd8;
+  --hairline-soft: #ebe6df;
+
+  /* ── Text ───────────────────────────────────────── */
+  --ink: #141413;          /* headlines, primary text */
+  --body-strong: #252523;  /* emphasized paragraphs */
+  --body: #3d3d3a;          /* default running text */
+  --muted: #6c6a64;         /* sub-headings, secondary */
+  --muted-soft: #8e8b82;    /* captions, fine print */
+  --on-primary: #ffffff;    /* text on coral */
+  --on-dark: #faf9f5;       /* cream-white on dark */
+  --on-dark-soft: #a09d96;  /* secondary on dark */
+
+  /* ── Semantic status ────────────────────────────── */
+  --success: #5db872;
+  --warning: #d4a017;
+  --error: #c64545;
+
+  /* ── Aliases used by components ─────────────────── */
+  --primary: var(--coral);
+  --primary-active: var(--coral-active);
+  --primary-disabled: var(--coral-disabled);
+  --text-heading: var(--ink);
+  --text-body: var(--body);
+  --text-muted: var(--muted);
+  --border-default: var(--hairline);
+  --focus-ring: rgba(204, 120, 92, 0.18);
+}

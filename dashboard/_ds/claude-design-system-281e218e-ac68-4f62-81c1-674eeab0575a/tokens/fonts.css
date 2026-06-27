@@ -1,0 +1,19 @@
+/* ──────────────────────────────────────────────────────────────
+   Fonts — webfont loading + family aliases
+
+   Brand faces (Copernicus / StyreneB) are licensed Anthropic
+   typefaces and not publicly available. Substitutes:
+     • Display serif  →  Newsreader   (≈ Copernicus / Tiempos Headline)
+     • Body sans      →  Inter        (≈ StyreneB)
+     • Mono           →  JetBrains Mono
+   See readme.md "Known gaps" — swap these @imports for the licensed
+   binaries when available.
+   ────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --font-display: 'Newsreader', 'Tiempos Headline', Garamond, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}

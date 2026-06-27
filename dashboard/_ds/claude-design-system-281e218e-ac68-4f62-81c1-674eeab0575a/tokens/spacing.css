@@ -1,0 +1,38 @@
+/* ──────────────────────────────────────────────────────────────
+   Spacing, radius & elevation
+   Base unit 4px. Section rhythm 96px.
+   ────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Spacing scale */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --space-section: 96px;
+
+  /* Border radius */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;   /* buttons, inputs, tabs */
+  --radius-lg: 12px;  /* content & product cards */
+  --radius-xl: 16px;  /* hero illustration container */
+  --radius-pill: 9999px;
+  --radius-full: 9999px;
+
+  /* Elevation — color-block first, shadow rare */
+  --shadow-none: none;
+  --shadow-soft: 0 1px 3px rgba(20, 20, 19, 0.08);
+  --shadow-card: 0 2px 12px rgba(20, 20, 19, 0.06);
+
+  /* Layout */
+  --container-max: 1200px;
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.32, 0.08, 0.24, 1) /* @kind other */;
+  --duration-fast: 120ms /* @kind other */;
+  --duration-base: 200ms /* @kind other */;
+}

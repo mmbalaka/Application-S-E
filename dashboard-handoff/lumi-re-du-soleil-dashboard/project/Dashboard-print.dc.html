@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/styles.css">
+  <script src="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/_ds_bundle.js"></script>
+  <style>
+    *{box-sizing:border-box;}
+    body{margin:0;}
+    .nav-a{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:8px;color:var(--muted);font-family:var(--font-body);font-size:14px;font-weight:500;text-decoration:none;cursor:pointer;border-left:3px solid transparent;}
+    .nav-a:hover{background:rgba(204,120,92,0.07);color:var(--ink);}
+    .nav-d{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:8px;color:var(--on-dark-soft);font-family:var(--font-body);font-size:14px;font-weight:500;text-decoration:none;cursor:pointer;border-left:3px solid transparent;}
+    .nav-d:hover{background:rgba(250,249,245,0.06);color:var(--on-dark);}
+  </style>
+
+  <style id="__print-css">
+    @page { size: A4 landscape; margin: 8mm; }
+    @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      html, body { background: #fff !important; margin: 0 !important; }
+    }
+  </style>
+  <script>
+  addEventListener('load', () => { (async () => {
+    try { await document.fonts.ready; } catch(e){}
+    // wait for the DC to render real content
+    const start = Date.now();
+    await new Promise(res => {
+      const tick = () => {
+        const dc = document.querySelector('x-dc');
+        const ok = dc && dc.getBoundingClientRect().height > 200;
+        if (ok || Date.now() - start > 8000) res(); else setTimeout(tick, 120);
+      };
+      tick();
+    });
+    const imgs = Array.from(document.images).filter(i => !i.complete);
+    await Promise.race([
+      Promise.allSettled(imgs.map(i => i.decode().catch(()=>{}))),
+      new Promise(r => setTimeout(r, 6000)),
+    ]);
+    // fit width to the printable A4-landscape column (~1080px @96dpi minus margins)
+    const root = document.querySelector('x-dc');
+    if (root) {
+      const w = root.scrollWidth || document.body.scrollWidth;
+      const target = 1060;
+      if (w > target) document.body.style.zoom = (target / w).toFixed(4);
+      // release forced full-viewport heights so the page can flow
+      document.querySelectorAll('[style*="100vh"]').forEach(el => {
+        el.style.minHeight = '0';
+        el.style.height = 'auto';
+      });
+    }
+    setTimeout(() => window.print(), 600);
+  })(); });
+  </script>
+
+</helmet>
+<div style="width:max-content;min-width:100%;min-height:100vh;box-sizing:border-box;padding:48px;background:#e7e5df;font-family:var(--font-body);">
+
+  <div style="max-width:1100px;margin-bottom:40px;">
+    <div style="font-family:var(--font-body);font-weight:500;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--coral);margin-bottom:12px;">Lumière du Soleil · Suivi-évaluation</div>
+    <h1 style="font-family:var(--font-display);font-weight:400;font-size:42px;line-height:1.1;letter-spacing:-1px;color:var(--ink);margin:0 0 16px;">Dashboard principal — 3 directions à comparer</h1>
+    <p style="font-family:var(--font-body);font-size:16px;line-height:1.6;color:var(--body);margin:0;max-width:880px;">Même contenu, trois partis-pris. Chaque maquette illustre aussi comment la vue s'adapte au <strong>rôle connecté</strong>. Données fictives mais réalistes (5 projets, 98 indicateurs, T2 2026). Seuils conservés : <strong style="color:#3f8a52;">Vert ≥ 90 %</strong>, <strong style="color:#9a6a1f;">Orange 70–90 %</strong>, <strong style="color:#b23b3b;">Rouge &lt; 70 %</strong>. Dis-moi la direction retenue et j'enchaîne les écrans suivants.</p>
+  </div>
+
+  <div style="display:flex;gap:56px;align-items:flex-start;">
+
+    <!-- ================= DIRECTION A ================= -->
+    <div style="flex:none;width:1240px;">
+      <div style="margin-bottom:14px;">
+        <div style="font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--ink);">Direction A — Sobre &amp; éditorial</div>
+        <div style="font-family:var(--font-body);font-size:13px;color:var(--muted);margin-top:2px;">Sidebar claire · rôle actif : Coordinateur de projet</div>
+      </div>
+      <div style="background:#fff;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden;">
+        <div style="display:flex;min-height:880px;background:var(--canvas);">
+
+          <!-- sidebar light -->
+          <aside style="width:236px;flex:none;background:var(--surface-soft);border-right:1px solid var(--hairline);display:flex;flex-direction:column;padding:22px 16px;">
+            <div style="display:flex;align-items:center;gap:11px;padding:0 8px 22px;">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.3" fill="#cc785c"/><g stroke="#cc785c" stroke-width="1.7" stroke-linecap="round"><line x1="12" y1="1.6" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.4"/><line x1="1.6" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.4" y2="12"/><line x1="4.5" y1="4.5" x2="6.2" y2="6.2"/><line x1="17.8" y1="17.8" x2="19.5" y2="19.5"/><line x1="19.5" y1="4.5" x2="17.8" y2="6.2"/><line x1="6.2" y1="17.8" x2="4.5" y2="19.5"/></g></svg>
+              <div><div style="font-family:var(--font-display);font-size:17px;color:var(--ink);line-height:1.1;">Lumière du Soleil</div><div style="font-size:11px;color:var(--muted);letter-spacing:.3px;">Suivi-évaluation</div></div>
+            </div>
+            <nav style="display:flex;flex-direction:column;gap:2px;">
+              <a class="nav-a" style="background:rgba(204,120,92,0.12);color:var(--ink);border-left-color:var(--coral);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Synthèse</a>
+              <a class="nav-a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Projets</a>
+              <a class="nav-a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-4 3 3 4-6"/></svg>Indicateurs</a>
+              <a class="nav-a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Saisie réalisation</a>
+              <a class="nav-a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h6"/></svg>Rapports</a>
+              <a class="nav-a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5l-8.6 8.6a4 4 0 0 1-5.7-5.7l8.6-8.6a2.5 2.5 0 0 1 3.5 3.5l-8.5 8.5a1 1 0 0 1-1.4-1.4l7.8-7.8"/></svg>Sources de vérification</a>
+              <a class="nav-a"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>Calendrier</a>
+            </nav>
+            <div style="margin-top:auto;display:flex;align-items:center;gap:10px;padding:11px;background:#fff;border:1px solid var(--hairline);border-radius:10px;">
+              <div style="width:34px;height:34px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;">AD</div>
+              <div style="min-width:0;"><div style="font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Aïssata Diallo</div><div style="font-size:11px;color:var(--muted);">Coordinatrice</div></div>
+            </div>
+          </aside>
+
+          <!-- main A -->
+          <main style="flex:1;min-width:0;padding:26px 30px;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;">
+              <div>
+                <h2 style="font-family:var(--font-display);font-weight:400;font-size:30px;letter-spacing:-.4px;color:var(--ink);margin:0;">Synthèse</h2>
+                <p style="font-size:14px;color:var(--muted);margin:4px 0 0;">Vue d'ensemble du portefeuille — 2ᵉ trimestre 2026</p>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div style="display:flex;background:var(--surface-soft);border:1px solid var(--hairline);border-radius:9px;padding:3px;font-size:13px;">
+                  <span style="padding:6px 12px;border-radius:6px;background:#fff;color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.05);">Coordinateur</span>
+                  <span style="padding:6px 12px;color:var(--muted);">Directeur</span>
+                  <span style="padding:6px 12px;color:var(--muted);">Évaluateur</span>
+                </div>
+                <button style="display:flex;align-items:center;gap:7px;background:var(--coral);color:#fff;border:none;border-radius:8px;padding:9px 15px;font-family:var(--font-body);font-size:14px;font-weight:500;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>Exporter le rapport</button>
+              </div>
+            </div>
+
+            <!-- KPI row A -->
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px;">
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:18px 20px;">
+                <div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:600;">Taux de réalisation global</div>
+                <div style="font-family:var(--font-display);font-size:42px;color:var(--coral);line-height:1.1;margin-top:8px;">74 %</div>
+                <div style="font-size:13px;color:#3f8a52;margin-top:4px;font-weight:500;">▲ +3 pts depuis le T1</div>
+              </div>
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:18px 20px;">
+                <div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:600;">Projets actifs</div>
+                <div style="font-family:var(--font-display);font-size:42px;color:var(--ink);line-height:1.1;margin-top:8px;">5</div>
+                <div style="font-size:13px;color:var(--muted);margin-top:4px;">sur 5 financés</div>
+              </div>
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:18px 20px;">
+                <div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:600;">Indicateurs suivis</div>
+                <div style="font-family:var(--font-display);font-size:42px;color:var(--ink);line-height:1.1;margin-top:8px;">98</div>
+                <div style="font-size:13px;color:var(--muted);margin-top:4px;">51 atteints · 32 à surveiller</div>
+              </div>
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:18px 20px;position:relative;">
+                <div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:600;">Indicateurs en alerte</div>
+                <div style="font-family:var(--font-display);font-size:42px;color:#b23b3b;line-height:1.1;margin-top:8px;">15</div>
+                <div style="font-size:13px;color:#b23b3b;margin-top:4px;">&lt; 70 % de la cible</div>
+              </div>
+            </div>
+
+            <!-- row 2 A -->
+            <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:20px;">
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:20px 22px;">
+                <div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:18px;">Avancement par projet</div>
+                <div style="display:flex;flex-direction:column;gap:16px;">
+                  <div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:14px;color:var(--ink);font-weight:500;">Maraîchage durable <span style="color:var(--muted);font-weight:400;">· A. Diallo</span></span><span style="font-size:14px;font-weight:600;color:var(--ink);">82 %</span></div><div style="height:9px;border-radius:5px;background:var(--surface-card);"><div style="width:82%;height:100%;border-radius:5px;background:#5db872;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:14px;color:var(--ink);font-weight:500;">Forêts &amp; climat <span style="color:var(--muted);font-weight:400;">· F. Ndiaye</span></span><span style="font-size:14px;font-weight:600;color:var(--ink);">91 %</span></div><div style="height:9px;border-radius:5px;background:var(--surface-card);"><div style="width:91%;height:100%;border-radius:5px;background:#5db872;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:14px;color:var(--ink);font-weight:500;">École &amp; protection de l'enfance <span style="color:var(--muted);font-weight:400;">· M. Koné</span></span><span style="font-size:14px;font-weight:600;color:var(--ink);">76 %</span></div><div style="height:9px;border-radius:5px;background:var(--surface-card);"><div style="width:76%;height:100%;border-radius:5px;background:#e8a55a;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:14px;color:var(--ink);font-weight:500;">Pisciculture villageoise <span style="color:var(--muted);font-weight:400;">· M. Traoré</span></span><span style="font-size:14px;font-weight:600;color:var(--ink);">68 %</span></div><div style="height:9px;border-radius:5px;background:var(--surface-card);"><div style="width:68%;height:100%;border-radius:5px;background:#e8a55a;"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:14px;color:var(--ink);font-weight:500;">Microentreprises jeunes <span style="color:var(--muted);font-weight:400;">· I. Sow</span></span><span style="font-size:14px;font-weight:600;color:#b23b3b;">54 %</span></div><div style="height:9px;border-radius:5px;background:var(--surface-card);"><div style="width:54%;height:100%;border-radius:5px;background:#c64545;"></div></div></div>
+                </div>
+              </div>
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:20px 22px;">
+                <div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:18px;">Répartition des indicateurs</div>
+                <div style="display:flex;height:14px;border-radius:7px;overflow:hidden;margin-bottom:18px;">
+                  <div style="width:52%;background:#5db872;"></div><div style="width:32.7%;background:#e8a55a;"></div><div style="width:15.3%;background:#c64545;"></div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:9px;font-size:14px;color:var(--ink);"><span style="width:11px;height:11px;border-radius:3px;background:#5db872;"></span>Atteint (≥ 90 %)</span><span style="font-weight:600;font-size:14px;">51</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:9px;font-size:14px;color:var(--ink);"><span style="width:11px;height:11px;border-radius:3px;background:#e8a55a;"></span>À surveiller (70–90 %)</span><span style="font-weight:600;font-size:14px;">32</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:9px;font-size:14px;color:var(--ink);"><span style="width:11px;height:11px;border-radius:3px;background:#c64545;"></span>En retard (&lt; 70 %)</span><span style="font-weight:600;font-size:14px;">15</span></div>
+                </div>
+                <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--hairline);font-size:12.5px;color:var(--muted);line-height:1.5;">Code couleur appliqué automatiquement selon les seuils paramétrés.</div>
+              </div>
+            </div>
+
+            <!-- row 3 A -->
+            <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:16px;">
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:20px 22px;">
+                <div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:4px;">Tendance du taux global</div>
+                <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">Janvier → Juin 2026</div>
+                <svg viewBox="0 0 300 110" style="width:100%;height:130px;overflow:visible;">
+                  <line x1="0" y1="90" x2="300" y2="90" stroke="#e6dfd8" stroke-width="1"/>
+                  <polygon points="0,71.3 60,62 120,55 180,45.7 240,41 300,34 300,90 0,90" fill="rgba(204,120,92,0.10)"/>
+                  <polyline points="0,71.3 60,62 120,55 180,45.7 240,41 300,34" fill="none" stroke="#cc785c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="300" cy="34" r="4" fill="#cc785c"/>
+                </svg>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px;"><span>Jan</span><span>Fév</span><span>Mar</span><span>Avr</span><span>Mai</span><span>Juin</span></div>
+              </div>
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:20px 22px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--ink);">Indicateurs en alerte</div><a style="font-size:13px;color:var(--coral);font-weight:500;text-decoration:none;cursor:pointer;">Voir les 15 →</a></div>
+                <div style="display:flex;flex-direction:column;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--hairline-soft);"><div><div style="font-size:14px;color:var(--ink);font-weight:500;">Jeunes formés en gestion</div><div style="font-size:12px;color:var(--muted);">Microentreprises jeunes</div></div><span style="font-size:12.5px;font-weight:600;color:#b23b3b;background:rgba(198,69,69,.12);padding:4px 9px;border-radius:20px;">48 %</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--hairline-soft);"><div><div style="font-size:14px;color:var(--ink);font-weight:500;">Consultations santé réalisées</div><div style="font-size:12px;color:var(--muted);">École &amp; protection de l'enfance</div></div><span style="font-size:12.5px;font-weight:600;color:#b23b3b;background:rgba(198,69,69,.12);padding:4px 9px;border-radius:20px;">58 %</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--hairline-soft);"><div><div style="font-size:14px;color:var(--ink);font-weight:500;">Microcrédits décaissés</div><div style="font-size:12px;color:var(--muted);">Microentreprises jeunes</div></div><span style="font-size:12.5px;font-weight:600;color:#b23b3b;background:rgba(198,69,69,.12);padding:4px 9px;border-radius:20px;">61 %</span></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;"><div><div style="font-size:14px;color:var(--ink);font-weight:500;">Étangs piscicoles fonctionnels</div><div style="font-size:12px;color:var(--muted);">Pisciculture villageoise</div></div><span style="font-size:12.5px;font-weight:600;color:#b23b3b;background:rgba(198,69,69,.12);padding:4px 9px;border-radius:20px;">64 %</span></div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= DIRECTION B ================= -->
+    <div style="flex:none;width:1240px;">
+      <div style="margin-bottom:14px;">
+        <div style="font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--ink);">Direction B — Pilotage graphique</div>
+        <div style="font-family:var(--font-body);font-size:13px;color:var(--muted);margin-top:2px;">Sidebar sombre · jauge, donut &amp; courbe · rôle actif : Directeur</div>
+      </div>
+      <div style="background:#fff;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden;">
+        <div style="display:flex;min-height:880px;background:var(--canvas);">
+
+          <!-- sidebar dark -->
+          <aside style="width:236px;flex:none;background:var(--surface-dark);display:flex;flex-direction:column;padding:22px 16px;">
+            <div style="display:flex;align-items:center;gap:11px;padding:0 8px 22px;">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.3" fill="#cc785c"/><g stroke="#cc785c" stroke-width="1.7" stroke-linecap="round"><line x1="12" y1="1.6" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.4"/><line x1="1.6" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.4" y2="12"/><line x1="4.5" y1="4.5" x2="6.2" y2="6.2"/><line x1="17.8" y1="17.8" x2="19.5" y2="19.5"/><line x1="19.5" y1="4.5" x2="17.8" y2="6.2"/><line x1="6.2" y1="17.8" x2="4.5" y2="19.5"/></g></svg>
+              <div><div style="font-family:var(--font-display);font-size:17px;color:var(--on-dark);line-height:1.1;">Lumière du Soleil</div><div style="font-size:11px;color:var(--on-dark-soft);letter-spacing:.3px;">Suivi-évaluation</div></div>
+            </div>
+            <nav style="display:flex;flex-direction:column;gap:2px;">
+              <a class="nav-d" style="background:rgba(204,120,92,0.18);color:var(--on-dark);border-left-color:var(--coral);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Synthèse</a>
+              <a class="nav-d"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Projets</a>
+              <a class="nav-d"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-4 3 3 4-6"/></svg>Indicateurs</a>
+              <a class="nav-d"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Saisie réalisation</a>
+              <a class="nav-d"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h6"/></svg>Rapports</a>
+              <a class="nav-d"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5l-8.6 8.6a4 4 0 0 1-5.7-5.7l8.6-8.6a2.5 2.5 0 0 1 3.5 3.5l-8.5 8.5a1 1 0 0 1-1.4-1.4l7.8-7.8"/></svg>Sources de vérification</a>
+              <a class="nav-d"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>Calendrier</a>
+            </nav>
+            <div style="margin-top:auto;display:flex;align-items:center;gap:10px;padding:11px;background:var(--surface-dark-elevated);border-radius:10px;">
+              <div style="width:34px;height:34px;border-radius:50%;background:var(--accent-teal);color:#10231f;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;">SK</div>
+              <div style="min-width:0;"><div style="font-size:13px;font-weight:600;color:var(--on-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Samuel Koffi</div><div style="font-size:11px;color:var(--on-dark-soft);">Directeur</div></div>
+            </div>
+          </aside>
+
+          <!-- main B -->
+          <main style="flex:1;min-width:0;padding:26px 30px;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;">
+              <div>
+                <h2 style="font-family:var(--font-display);font-weight:400;font-size:30px;letter-spacing:-.4px;color:var(--ink);margin:0;">Pilotage stratégique</h2>
+                <p style="font-size:14px;color:var(--muted);margin:4px 0 0;">Portefeuille de 5 projets — T2 2026</p>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div style="display:flex;background:var(--surface-soft);border:1px solid var(--hairline);border-radius:9px;padding:3px;font-size:13px;">
+                  <span style="padding:6px 12px;color:var(--muted);">Coordinateur</span>
+                  <span style="padding:6px 12px;border-radius:6px;background:#fff;color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.05);">Directeur</span>
+                  <span style="padding:6px 12px;color:var(--muted);">Évaluateur</span>
+                </div>
+                <button style="display:flex;align-items:center;gap:7px;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:9px 15px;font-family:var(--font-body);font-size:14px;font-weight:500;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>Rapport bailleurs</button>
+              </div>
+            </div>
+
+            <!-- dark hero band -->
+            <div style="background:var(--surface-dark);border-radius:16px;padding:26px 30px;display:flex;align-items:center;gap:38px;margin-bottom:18px;">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+                <div style="width:150px;height:150px;border-radius:50%;background:conic-gradient(#cc785c 0 74%, rgba(250,249,245,0.12) 74% 100%);display:flex;align-items:center;justify-content:center;">
+                  <div style="width:112px;height:112px;border-radius:50%;background:var(--surface-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;"><span style="font-family:var(--font-display);font-size:38px;color:var(--on-dark);line-height:1;">74<span style="font-size:20px;">%</span></span><span style="font-size:11px;color:var(--on-dark-soft);letter-spacing:.5px;margin-top:2px;">Taux global</span></div>
+                </div>
+                <span style="font-size:12.5px;color:#7fd0bd;font-weight:500;">▲ +3 pts vs T1</span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 30px;flex:1;">
+                <div><div style="font-size:12px;color:var(--on-dark-soft);text-transform:uppercase;letter-spacing:1px;">Projets actifs</div><div style="font-family:var(--font-display);font-size:30px;color:var(--on-dark);margin-top:2px;">5</div></div>
+                <div><div style="font-size:12px;color:var(--on-dark-soft);text-transform:uppercase;letter-spacing:1px;">Indicateurs suivis</div><div style="font-family:var(--font-display);font-size:30px;color:var(--on-dark);margin-top:2px;">98</div></div>
+                <div><div style="font-size:12px;color:var(--on-dark-soft);text-transform:uppercase;letter-spacing:1px;">Budget engagé</div><div style="font-family:var(--font-display);font-size:30px;color:var(--on-dark);margin-top:2px;">68 %</div><div style="font-size:12px;color:var(--on-dark-soft);">824 k€ / 1,21 M€</div></div>
+                <div><div style="font-size:12px;color:var(--on-dark-soft);text-transform:uppercase;letter-spacing:1px;">Indicateurs en alerte</div><div style="font-family:var(--font-display);font-size:30px;color:#e88a6c;margin-top:2px;">15</div><div style="font-size:12px;color:var(--on-dark-soft);">à arbitrer</div></div>
+              </div>
+              <div style="width:1px;align-self:stretch;background:rgba(250,249,245,0.10);"></div>
+              <div style="width:150px;">
+                <div style="font-size:12px;color:var(--on-dark-soft);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Tendance 6 mois</div>
+                <svg viewBox="0 0 150 60" style="width:100%;height:56px;overflow:visible;">
+                  <polyline points="0,46 30,40 60,35 90,28 120,24 150,18" fill="none" stroke="#cc785c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="150" cy="18" r="3.5" fill="#cc785c"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- row donut + line -->
+            <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:18px;margin-bottom:18px;">
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:20px 22px;">
+                <div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:16px;">Répartition par statut</div>
+                <div style="display:flex;align-items:center;gap:22px;">
+                  <div style="width:128px;height:128px;border-radius:50%;background:conic-gradient(#5db872 0 52%, #e8a55a 52% 84.7%, #c64545 84.7% 100%);display:flex;align-items:center;justify-content:center;flex:none;">
+                    <div style="width:80px;height:80px;border-radius:50%;background:#fffdfa;display:flex;flex-direction:column;align-items:center;justify-content:center;"><span style="font-family:var(--font-display);font-size:26px;color:var(--ink);line-height:1;">98</span><span style="font-size:10.5px;color:var(--muted);">indicateurs</span></div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:11px;flex:1;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink);"><span style="width:10px;height:10px;border-radius:3px;background:#5db872;"></span>Atteint</span><span style="font-weight:600;font-size:13.5px;">51</span></div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink);"><span style="width:10px;height:10px;border-radius:3px;background:#e8a55a;"></span>À surveiller</span><span style="font-weight:600;font-size:13.5px;">32</span></div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink);"><span style="width:10px;height:10px;border-radius:3px;background:#c64545;"></span>En retard</span><span style="font-weight:600;font-size:13.5px;">15</span></div>
+                  </div>
+                </div>
+              </div>
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:20px 22px;">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;"><div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--ink);">Tendance du taux de réalisation</div><span style="font-size:13px;color:var(--muted);">Cible finale : 100 %</span></div>
+                <svg viewBox="0 0 380 130" style="width:100%;height:150px;overflow:visible;">
+                  <line x1="0" y1="20" x2="380" y2="20" stroke="#ebe6df" stroke-width="1"/>
+                  <line x1="0" y1="60" x2="380" y2="60" stroke="#ebe6df" stroke-width="1"/>
+                  <line x1="0" y1="100" x2="380" y2="100" stroke="#ebe6df" stroke-width="1"/>
+                  <polygon points="0,88 76,79 152,71 228,60 304,55 380,46 380,110 0,110" fill="rgba(204,120,92,0.10)"/>
+                  <polyline points="0,88 76,79 152,71 228,60 304,55 380,46" fill="none" stroke="#cc785c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="0" cy="88" r="3.5" fill="#cc785c"/><circle cx="76" cy="79" r="3.5" fill="#cc785c"/><circle cx="152" cy="71" r="3.5" fill="#cc785c"/><circle cx="228" cy="60" r="3.5" fill="#cc785c"/><circle cx="304" cy="55" r="3.5" fill="#cc785c"/><circle cx="380" cy="46" r="4.5" fill="#cc785c"/>
+                </svg>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px;"><span>Jan</span><span>Fév</span><span>Mar</span><span>Avr</span><span>Mai</span><span>Juin</span></div>
+              </div>
+            </div>
+
+            <!-- bars + alerts B -->
+            <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:18px;">
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:20px 22px;">
+                <div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--ink);margin-bottom:16px;">Avancement par projet</div>
+                <div style="display:flex;flex-direction:column;gap:13px;">
+                  <div style="display:flex;align-items:center;gap:12px;"><span style="width:170px;flex:none;font-size:13.5px;color:var(--ink);">Forêts &amp; climat</span><div style="flex:1;height:22px;border-radius:6px;background:var(--surface-card);position:relative;"><div style="width:91%;height:100%;border-radius:6px;background:#5db872;"></div></div><span style="width:38px;text-align:right;font-weight:600;font-size:13.5px;">91 %</span></div>
+                  <div style="display:flex;align-items:center;gap:12px;"><span style="width:170px;flex:none;font-size:13.5px;color:var(--ink);">Maraîchage durable</span><div style="flex:1;height:22px;border-radius:6px;background:var(--surface-card);position:relative;"><div style="width:82%;height:100%;border-radius:6px;background:#5db872;"></div></div><span style="width:38px;text-align:right;font-weight:600;font-size:13.5px;">82 %</span></div>
+                  <div style="display:flex;align-items:center;gap:12px;"><span style="width:170px;flex:none;font-size:13.5px;color:var(--ink);">École &amp; enfance</span><div style="flex:1;height:22px;border-radius:6px;background:var(--surface-card);position:relative;"><div style="width:76%;height:100%;border-radius:6px;background:#e8a55a;"></div></div><span style="width:38px;text-align:right;font-weight:600;font-size:13.5px;">76 %</span></div>
+                  <div style="display:flex;align-items:center;gap:12px;"><span style="width:170px;flex:none;font-size:13.5px;color:var(--ink);">Pisciculture villageoise</span><div style="flex:1;height:22px;border-radius:6px;background:var(--surface-card);position:relative;"><div style="width:68%;height:100%;border-radius:6px;background:#e8a55a;"></div></div><span style="width:38px;text-align:right;font-weight:600;font-size:13.5px;">68 %</span></div>
+                  <div style="display:flex;align-items:center;gap:12px;"><span style="width:170px;flex:none;font-size:13.5px;color:var(--ink);">Microentreprises jeunes</span><div style="flex:1;height:22px;border-radius:6px;background:var(--surface-card);position:relative;"><div style="width:54%;height:100%;border-radius:6px;background:#c64545;"></div></div><span style="width:38px;text-align:right;font-weight:600;font-size:13.5px;color:#b23b3b;">54 %</span></div>
+                </div>
+              </div>
+              <div style="background:var(--surface-dark);border-radius:12px;padding:20px 22px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--on-dark);">Échéances à venir</div><span style="font-size:12px;color:var(--on-dark-soft);">Juillet</span></div>
+                <div style="display:flex;flex-direction:column;gap:14px;">
+                  <div style="display:flex;gap:12px;align-items:flex-start;"><div style="flex:none;width:44px;text-align:center;"><div style="font-family:var(--font-display);font-size:20px;color:#e88a6c;line-height:1;">30</div><div style="font-size:10px;color:var(--on-dark-soft);text-transform:uppercase;">Juin</div></div><div><div style="font-size:13.5px;color:var(--on-dark);font-weight:500;">Rapport semestriel S1</div><div style="font-size:12px;color:var(--on-dark-soft);">Forêts &amp; climat</div></div></div>
+                  <div style="display:flex;gap:12px;align-items:flex-start;"><div style="flex:none;width:44px;text-align:center;"><div style="font-family:var(--font-display);font-size:20px;color:var(--on-dark);line-height:1;">05</div><div style="font-size:10px;color:var(--on-dark-soft);text-transform:uppercase;">Juil</div></div><div><div style="font-size:13.5px;color:var(--on-dark);font-weight:500;">Mission d'évaluation externe</div><div style="font-size:12px;color:var(--on-dark-soft);">Microentreprises jeunes</div></div></div>
+                  <div style="display:flex;gap:12px;align-items:flex-start;"><div style="flex:none;width:44px;text-align:center;"><div style="font-family:var(--font-display);font-size:20px;color:var(--on-dark);line-height:1;">12</div><div style="font-size:10px;color:var(--on-dark-soft);text-transform:uppercase;">Juil</div></div><div><div style="font-size:13.5px;color:var(--on-dark);font-weight:500;">Comité de pilotage trimestriel</div><div style="font-size:12px;color:var(--on-dark-soft);">Tous les projets</div></div></div>
+                  <div style="display:flex;gap:12px;align-items:flex-start;"><div style="flex:none;width:44px;text-align:center;"><div style="font-family:var(--font-display);font-size:20px;color:var(--on-dark);line-height:1;">20</div><div style="font-size:10px;color:var(--on-dark-soft);text-transform:uppercase;">Juil</div></div><div><div style="font-size:13.5px;color:var(--on-dark);font-weight:500;">Clôture collecte terrain T2</div><div style="font-size:12px;color:var(--on-dark-soft);">Maraîchage durable</div></div></div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= DIRECTION C ================= -->
+    <div style="flex:none;width:1240px;">
+      <div style="margin-bottom:14px;">
+        <div style="font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--ink);">Direction C — Cockpit dense</div>
+        <div style="font-family:var(--font-body);font-size:13px;color:var(--muted);margin-top:2px;">Matrice de performance + flux · rôle actif : Évaluateur externe</div>
+      </div>
+      <div style="background:#fff;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden;">
+        <div style="display:flex;min-height:880px;background:var(--canvas);">
+
+          <!-- sidebar dark compact -->
+          <aside style="width:236px;flex:none;background:var(--surface-dark);display:flex;flex-direction:column;padding:22px 16px;">
+            <div style="display:flex;align-items:center;gap:11px;padding:0 8px 22px;">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.3" fill="#cc785c"/><g stroke="#cc785c" stroke-width="1.7" stroke-linecap="round"><line x1="12" y1="1.6" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.4"/><line x1="1.6" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.4" y2="12"/><line x1="4.5" y1="4.5" x2="6.2" y2="6.2"/><line x1="17.8" y1="17.8" x2="19.5" y2="19.5"/><line x1="19.5" y1="4.5" x2="17.8" y2="6.2"/><line x1="6.2" y1="17.8" x2="4.5" y2="19.5"/></g></svg>
+              <div><div style="font-family:var(--font-display);font-size:17px;color:var(--on-dark);line-height:1.1;">Lumière du Soleil</div><div style="font-size:11px;color:var(--on-dark-soft);letter-spacing:.3px;">Suivi-évaluation</div></div>
+            </div>
+            <nav style="display:flex;flex-direction:column;gap:2px;">
+              <a class="nav-d" style="background:rgba(204,120,92,0.18);color:var(--on-dark);border-left-color:var(--coral);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Synthèse</a>
+              <a class="nav-d"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Projets</a>
+              <a class="nav-d"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-4 3 3 4-6"/></svg>Indicateurs</a>
+              <a class="nav-d"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Saisie réalisation</a>
+              <a class="nav-d"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8M8 17h6"/></svg>Rapports</a>
+              <a class="nav-d"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5l-8.6 8.6a4 4 0 0 1-5.7-5.7l8.6-8.6a2.5 2.5 0 0 1 3.5 3.5l-8.5 8.5a1 1 0 0 1-1.4-1.4l7.8-7.8"/></svg>Sources de vérification</a>
+              <a class="nav-d"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>Calendrier</a>
+            </nav>
+            <div style="margin-top:auto;display:flex;align-items:center;gap:10px;padding:11px;background:var(--surface-dark-elevated);border-radius:10px;">
+              <div style="width:34px;height:34px;border-radius:50%;background:var(--accent-amber);color:#3a2a12;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;">LR</div>
+              <div style="min-width:0;"><div style="font-size:13px;font-weight:600;color:var(--on-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Léa Rousseau</div><div style="font-size:11px;color:var(--on-dark-soft);">Évaluatrice externe</div></div>
+            </div>
+          </aside>
+
+          <!-- main C -->
+          <main style="flex:1;min-width:0;padding:24px 28px;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;">
+              <div>
+                <h2 style="font-family:var(--font-display);font-weight:400;font-size:28px;letter-spacing:-.4px;color:var(--ink);margin:0;">Cockpit d'évaluation</h2>
+                <p style="font-size:13.5px;color:var(--muted);margin:4px 0 0;">Contrôle de performance &amp; traçabilité — T2 2026</p>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div style="display:flex;background:var(--surface-soft);border:1px solid var(--hairline);border-radius:9px;padding:3px;font-size:13px;">
+                  <span style="padding:6px 12px;color:var(--muted);">Coordinateur</span>
+                  <span style="padding:6px 12px;color:var(--muted);">Directeur</span>
+                  <span style="padding:6px 12px;border-radius:6px;background:#fff;color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.05);">Évaluateur</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- compact KPI strip -->
+            <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:18px;">
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:10px;padding:12px 14px;"><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Taux global</div><div style="font-family:var(--font-display);font-size:26px;color:var(--coral);margin-top:3px;">74 %</div></div>
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:10px;padding:12px 14px;"><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Indicateurs</div><div style="font-family:var(--font-display);font-size:26px;color:var(--ink);margin-top:3px;">98</div></div>
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:10px;padding:12px 14px;"><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Atteints</div><div style="font-family:var(--font-display);font-size:26px;color:#3f8a52;margin-top:3px;">51</div></div>
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:10px;padding:12px 14px;"><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">En retard</div><div style="font-family:var(--font-display);font-size:26px;color:#b23b3b;margin-top:3px;">15</div></div>
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:10px;padding:12px 14px;"><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">Sources archivées</div><div style="font-family:var(--font-display);font-size:26px;color:var(--ink);margin-top:3px;">412</div></div>
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:10px;padding:12px 14px;"><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;">À vérifier</div><div style="font-family:var(--font-display);font-size:26px;color:#9a6a1f;margin-top:3px;">23</div></div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1.55fr 1fr;gap:16px;">
+              <!-- heatmap matrix -->
+              <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:18px 20px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;"><div style="font-family:var(--font-body);font-weight:600;font-size:16px;color:var(--ink);">Matrice de performance</div><div style="display:flex;gap:12px;font-size:11.5px;color:var(--muted);"><span style="display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:2px;background:#5db872;"></span>≥90</span><span style="display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:2px;background:#e8a55a;"></span>70–90</span><span style="display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:2px;background:#c64545;"></span>&lt;70</span></div></div>
+                <div style="display:grid;grid-template-columns:150px repeat(5,1fr);gap:6px;align-items:center;">
+                  <div></div>
+                  <div style="font-size:10.5px;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.3px;">Impact</div>
+                  <div style="font-size:10.5px;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.3px;">Effet</div>
+                  <div style="font-size:10.5px;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.3px;">Produit</div>
+                  <div style="font-size:10.5px;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.3px;">Activité</div>
+                  <div style="font-size:10.5px;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.3px;">Budget</div>
+
+                  <div style="font-size:12.5px;color:var(--ink);font-weight:500;">Maraîchage durable</div>
+                  <div style="background:rgba(93,184,114,.2);color:#2f7d44;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">88</div>
+                  <div style="background:rgba(93,184,114,.2);color:#2f7d44;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">90</div>
+                  <div style="background:rgba(93,184,114,.2);color:#2f7d44;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">81</div>
+                  <div style="background:rgba(232,165,90,.24);color:#9a6a1f;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">79</div>
+                  <div style="background:rgba(93,184,114,.2);color:#2f7d44;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">85</div>
+
+                  <div style="font-size:12.5px;color:var(--ink);font-weight:500;">Forêts &amp; climat</div>
+                  <div style="background:rgba(93,184,114,.2);color:#2f7d44;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">94</div>
+                  <div style="background:rgba(93,184,114,.2);color:#2f7d44;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">92</div>
+                  <div style="background:rgba(93,184,114,.2);color:#2f7d44;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">90</div>
+                  <div style="background:rgba(93,184,114,.2);color:#2f7d44;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">89</div>
+                  <div style="background:rgba(232,165,90,.24);color:#9a6a1f;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">88</div>
+
+                  <div style="font-size:12.5px;color:var(--ink);font-weight:500;">École &amp; enfance</div>
+                  <div style="background:rgba(232,165,90,.24);color:#9a6a1f;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">78</div>
+                  <div style="background:rgba(232,165,90,.24);color:#9a6a1f;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">80</div>
+                  <div style="background:rgba(232,165,90,.24);color:#9a6a1f;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">74</div>
+                  <div style="background:rgba(198,69,69,.16);color:#b23b3b;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">66</div>
+                  <div style="background:rgba(232,165,90,.24);color:#9a6a1f;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">82</div>
+
+                  <div style="font-size:12.5px;color:var(--ink);font-weight:500;">Pisciculture villageoise</div>
+                  <div style="background:rgba(232,165,90,.24);color:#9a6a1f;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">72</div>
+                  <div style="background:rgba(232,165,90,.24);color:#9a6a1f;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">70</div>
+                  <div style="background:rgba(198,69,69,.16);color:#b23b3b;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">64</div>
+                  <div style="background:rgba(232,165,90,.24);color:#9a6a1f;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">71</div>
+                  <div style="background:rgba(93,184,114,.2);color:#2f7d44;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">83</div>
+
+                  <div style="font-size:12.5px;color:var(--ink);font-weight:500;">Microentreprises jeunes</div>
+                  <div style="background:rgba(198,69,69,.16);color:#b23b3b;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">52</div>
+                  <div style="background:rgba(198,69,69,.16);color:#b23b3b;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">58</div>
+                  <div style="background:rgba(198,69,69,.16);color:#b23b3b;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">48</div>
+                  <div style="background:rgba(232,165,90,.24);color:#9a6a1f;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">70</div>
+                  <div style="background:rgba(198,69,69,.16);color:#b23b3b;border-radius:6px;padding:9px 0;text-align:center;font-size:12.5px;font-weight:600;">61</div>
+                </div>
+                <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--hairline);font-size:12px;color:var(--muted);">Taux de réalisation cumulé (%) par niveau de la chaîne de résultats. Cliquer une cellule ouvre le détail de l'indicateur et ses sources.</div>
+              </div>
+
+              <!-- right rail -->
+              <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:18px 20px;">
+                  <div style="font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--ink);margin-bottom:12px;">Alertes prioritaires</div>
+                  <div style="display:flex;flex-direction:column;gap:10px;">
+                    <div style="display:flex;gap:10px;align-items:flex-start;"><span style="width:7px;height:7px;border-radius:50%;background:#c64545;margin-top:6px;flex:none;"></span><div><div style="font-size:13px;color:var(--ink);font-weight:500;">Jeunes formés en gestion — 48 %</div><div style="font-size:11.5px;color:var(--muted);">Microentreprises · écart −52 %</div></div></div>
+                    <div style="display:flex;gap:10px;align-items:flex-start;"><span style="width:7px;height:7px;border-radius:50%;background:#c64545;margin-top:6px;flex:none;"></span><div><div style="font-size:13px;color:var(--ink);font-weight:500;">Consultations santé — 58 %</div><div style="font-size:11.5px;color:var(--muted);">École &amp; enfance · écart −42 %</div></div></div>
+                    <div style="display:flex;gap:10px;align-items:flex-start;"><span style="width:7px;height:7px;border-radius:50%;background:#c64545;margin-top:6px;flex:none;"></span><div><div style="font-size:13px;color:var(--ink);font-weight:500;">Étangs fonctionnels — 64 %</div><div style="font-size:11.5px;color:var(--muted);">Pisciculture · écart −36 %</div></div></div>
+                  </div>
+                </div>
+                <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:18px 20px;">
+                  <div style="font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--ink);margin-bottom:12px;">Sources à vérifier</div>
+                  <div style="display:flex;flex-direction:column;gap:10px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;align-items:center;gap:9px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9a6a1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg><span style="font-size:12.5px;color:var(--ink);">Liste émargement formation.pdf</span></div><span style="font-size:11px;color:#9a6a1f;background:rgba(232,165,90,.18);padding:3px 8px;border-radius:20px;">En attente</span></div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;align-items:center;gap:9px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9a6a1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg><span style="font-size:12.5px;color:var(--ink);">PV réception étangs.jpg</span></div><span style="font-size:11px;color:#9a6a1f;background:rgba(232,165,90,.18);padding:3px 8px;border-radius:20px;">En attente</span></div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;align-items:center;gap:9px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3f8a52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg><span style="font-size:12.5px;color:var(--ink);">Registre consultations.xlsx</span></div><span style="font-size:11px;color:#3f8a52;background:rgba(93,184,114,.18);padding:3px 8px;border-radius:20px;">Validée</span></div>
+                  </div>
+                </div>
+                <div style="background:#fffdfa;border:1px solid var(--hairline);border-radius:12px;padding:18px 20px;">
+                  <div style="font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--ink);margin-bottom:12px;">Prochaines échéances</div>
+                  <div style="display:flex;flex-direction:column;gap:11px;">
+                    <div style="display:flex;gap:11px;align-items:center;"><div style="flex:none;width:40px;text-align:center;background:var(--surface-card);border-radius:7px;padding:5px 0;"><div style="font-family:var(--font-display);font-size:16px;color:var(--ink);line-height:1;">05</div><div style="font-size:9.5px;color:var(--muted);text-transform:uppercase;">Juil</div></div><div style="font-size:12.5px;color:var(--ink);">Mission d'évaluation externe<div style="font-size:11px;color:var(--muted);">Microentreprises jeunes</div></div></div>
+                    <div style="display:flex;gap:11px;align-items:center;"><div style="flex:none;width:40px;text-align:center;background:var(--surface-card);border-radius:7px;padding:5px 0;"><div style="font-family:var(--font-display);font-size:16px;color:var(--ink);line-height:1;">12</div><div style="font-size:9.5px;color:var(--muted);text-transform:uppercase;">Juil</div></div><div style="font-size:12.5px;color:var(--ink);">Comité de pilotage T2<div style="font-size:11px;color:var(--muted);">Tous les projets</div></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

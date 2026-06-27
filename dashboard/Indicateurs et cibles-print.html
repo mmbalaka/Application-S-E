@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/tokens/colors.css">
+<link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/tokens/typography.css">
+<link rel="stylesheet" href="_ds/claude-design-system-281e218e-ac68-4f62-81c1-674eeab0575a/styles.css">
+<style>
+  @page { size: A4 portrait; margin: 0; }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { margin: 0; background: var(--canvas); }
+  body { padding: 18mm 16mm; font-family: var(--font-body); color: var(--ink); }
+  .eyebrow { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--coral); font-weight: 600; }
+  h1 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.6px; font-size: 32px; margin: 6px 0 2px; }
+  .sub { color: var(--muted); font-size: 14px; margin-bottom: 26px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { text-align: left; font-weight: 600; font-size: 11px; letter-spacing: .4px; text-transform: uppercase; color: var(--muted); padding: 0 12px 10px; border-bottom: 1px solid var(--hairline); }
+  thead th.num { text-align: right; }
+  tbody td { padding: 14px 12px; border-bottom: 1px solid var(--hairline); vertical-align: middle; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ind { font-weight: 500; color: var(--ink); }
+  .unit { color: var(--muted); font-size: 12px; }
+  .bar { position: relative; height: 7px; border-radius: 4px; background: #ece5dd; width: 96px; margin-left: auto; }
+  .bar > span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; }
+  .rate { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-block; padding: 4px 11px; border-radius: 999px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .ok { background: rgba(93,184,166,.16); color: #2f7a6c; }
+  .watch { background: rgba(232,165,90,.18); color: #a86a16; }
+  .late { background: rgba(204,120,92,.16); color: #b4543a; }
+  tfoot td { padding-top: 20px; color: var(--muted); font-size: 11px; }
+  .src { margin-top: 28px; font-size: 11px; color: var(--muted); border-top: 1px solid var(--hairline); padding-top: 12px; }
+</style>
+</head>
+<body>
+  <template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" fill="#faf9f5"/>
+  <rect x="22" y="24" width="56" height="6" rx="3" fill="#cc785c"/>
+  <rect x="22" y="40" width="40" height="5" rx="2.5" fill="#181715"/>
+  <rect x="22" y="54" width="56" height="5" rx="2.5" fill="#5db8a6"/>
+  <rect x="22" y="66" width="48" height="5" rx="2.5" fill="#e8a55a"/>
+  <rect x="22" y="78" width="34" height="5" rx="2.5" fill="#cc785c"/>
+  </svg>
+  </template>
+  <div class="eyebrow">Lumière du Soleil — Suivi-évaluation</div>
+  <h1>Indicateurs et cibles</h1>
+  <div class="sub">Période S1 2026 · valeurs réalisées au 25 juin 2026</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Indicateur</th>
+        <th class="num">Cible</th>
+        <th class="num">Réalisé</th>
+        <th class="num">Progression</th>
+        <th class="num">Taux</th>
+        <th>Statut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="ind">Producteurs encadrés</div><div class="unit">personnes</div></td>
+        <td class="num">250</td><td class="num">238</td>
+        <td class="num"><div class="bar"><span style="width:95%;background:#5db8a6"></span></div></td>
+        <td class="num rate">95 %</td>
+        <td><span class="pill ok">Atteint</span></td>
+      </tr>
+      <tr>
+        <td><div class="ind">Rendement moyen</div><div class="unit">t/ha</div></td>
+        <td class="num">4,5</td><td class="num">4,1</td>
+        <td class="num"><div class="bar"><span style="width:91%;background:#5db8a6"></span></div></td>
+        <td class="num rate">91 %</td>
+        <td><span class="pill ok">Atteint</span></td>
+      </tr>
+      <tr>
+        <td><div class="ind">Superficie emblavée</div><div class="unit">hectares</div></td>
+        <td class="num">120</td><td class="num">104</td>
+        <td class="num"><div class="bar"><span style="width:87%;background:#e8a55a"></span></div></td>
+        <td class="num rate">87 %</td>
+        <td><span class="pill watch">À surveiller</span></td>
+      </tr>
+      <tr>
+        <td><div class="ind">Coopératives appuyées</div><div class="unit">structures</div></td>
+        <td class="num">8</td><td class="num">6</td>
+        <td class="num"><div class="bar"><span style="width:75%;background:#e8a55a"></span></div></td>
+        <td class="num rate">75 %</td>
+        <td><span class="pill watch">À surveiller</span></td>
+      </tr>
+      <tr>
+        <td><div class="ind">Volume commercialisé</div><div class="unit">tonnes</div></td>
+        <td class="num">60</td><td class="num">35</td>
+        <td class="num"><div class="bar"><span style="width:58%;background:#cc785c"></span></div></td>
+        <td class="num rate">58 %</td>
+        <td><span class="pill late">En retard</span></td>
+      </tr>
+      <tr>
+        <td><div class="ind">Femmes bénéficiaires</div><div class="unit">personnes</div></td>
+        <td class="num">300</td><td class="num">285</td>
+        <td class="num"><div class="bar"><span style="width:95%;background:#5db8a6"></span></div></td>
+        <td class="num rate">95 %</td>
+        <td><span class="pill ok">Atteint</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="src">Source : Formulaire de rapport — programme Lumière du Soleil. Taux = réalisé / cible.</div>
+
+<script>
+addEventListener('load', () => { (async () => {
+  try { await document.fonts.ready; } catch(e){}
+  setTimeout(() => window.print(), 400);
+})(); });
+</script>
+</body>
+</html>

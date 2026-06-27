@@ -1,0 +1,5 @@
+# Archives sources (contenu déjà décompressé dans les sous-dossiers)
+*.zip
+
+# Dossiers d'outils locaux
+.claude/
