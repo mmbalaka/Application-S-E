@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumière du Soleil — Suivi & Évaluation</title>
+<style>
+  :root{
+    --bg:#e7e5df; --card:#faf9f5; --ink:#2b2722; --body:#5a534a;
+    --muted:#8a8178; --coral:#cc785c; --line:#d9d5cc;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;padding:48px 24px;}
+  .wrap{max-width:1000px;margin:0 auto;}
+  .eyebrow{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--coral);
+    font-weight:600;margin-bottom:12px;}
+  h1{font-size:40px;line-height:1.1;letter-spacing:-1px;font-weight:600;margin:0 0 14px;}
+  .lead{font-size:17px;color:var(--body);max-width:760px;margin:0 0 8px;}
+  .meta{font-size:14px;color:var(--muted);margin:0 0 40px;}
+  h2{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
+    font-weight:600;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--line);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
+  a.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:18px 20px;text-decoration:none;color:var(--ink);transition:.15s;}
+  a.card:hover{border-color:var(--coral);transform:translateY(-2px);
+    box-shadow:0 6px 20px rgba(204,120,92,.12);}
+  .card .t{font-weight:600;font-size:16px;margin-bottom:4px;}
+  .card .d{font-size:13px;color:var(--muted);}
+  .small a{color:var(--coral);text-decoration:none;font-size:14px;margin-right:18px;}
+  .small a:hover{text-decoration:underline;}
+  footer{margin-top:56px;font-size:13px;color:var(--muted);
+    border-top:1px solid var(--line);padding-top:20px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Lumière du Soleil · Suivi-évaluation</div>
+  <h1>Application S&amp;E — Dashboard</h1>
+  <p class="lead">Maquettes des écrans de l'application de suivi &amp; évaluation. Données fictives mais réalistes (5 projets, 98 indicateurs, T2 2026).</p>
+  <p class="meta">Cliquez sur un écran pour l'ouvrir.</p>
+
+  <h2>Écrans de l'application</h2>
+  <div class="grid">
+    <a class="card" href="dashboard/Connexion%20et%20accueils.dc.html">
+      <div class="t">Connexion &amp; accueils</div><div class="d">Authentification et écrans d'accueil par rôle</div></a>
+    <a class="card" href="dashboard/Dashboard%20principal.dc.html">
+      <div class="t">Dashboard principal</div><div class="d">Vue d'ensemble — 3 directions à comparer</div></a>
+    <a class="card" href="dashboard/Dashboard.dc.html">
+      <div class="t">Dashboard (variante)</div><div class="d">Autre parti-pris de tableau de bord</div></a>
+    <a class="card" href="dashboard/Liste%20des%20projets.dc.html">
+      <div class="t">Liste des projets</div><div class="d">Vue tabulaire de tous les projets</div></a>
+    <a class="card" href="dashboard/Fiche%20projet.dc.html">
+      <div class="t">Fiche projet</div><div class="d">Détail d'un projet</div></a>
+    <a class="card" href="dashboard/Calendrier%20Gantt.dc.html">
+      <div class="t">Calendrier Gantt</div><div class="d">Planning et jalons</div></a>
+    <a class="card" href="dashboard/Formulaire%20rapport.dc.html">
+      <div class="t">Formulaire de rapport</div><div class="d">Saisie d'un rapport de suivi</div></a>
+  </div>
+
+  <h2>Versions imprimables &amp; exports</h2>
+  <div class="grid">
+    <a class="card" href="dashboard/Indicateurs%20et%20cibles-print.html">
+      <div class="t">Indicateurs &amp; cibles</div><div class="d">Version imprimable (PDF)</div></a>
+    <a class="card" href="dashboard/Recueil%20ecrans-print.dc.html">
+      <div class="t">Recueil des écrans</div><div class="d">Tous les écrans (version imprimable)</div></a>
+  </div>
+  <p class="small" style="margin-top:16px;">
+    <a href="dashboard/exports/indicateurs-cibles.csv">⬇ indicateurs-cibles.csv</a>
+    <a href="dashboard/exports/indicateurs-cibles.xlsx">⬇ indicateurs-cibles.xlsx</a>
+  </p>
+
+  <footer>
+    Projet <strong>Application S&amp;E</strong> — Lumière du Soleil ·
+    Code source : <a href="https://github.com/mmbalaka/Application-S-E" style="color:var(--coral);">github.com/mmbalaka/Application-S-E</a>
+  </footer>
+</div>
+</body>
+</html>
