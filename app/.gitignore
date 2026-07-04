@@ -1,0 +1,15 @@
+# Environnement virtuel Python
+.venv/
+
+# Base de données locale (données réelles — ne pas publier sur un dépôt public)
+db.sqlite3
+
+# Fichiers téléversés (justificatifs — données réelles)
+media/
+
+# Caches Python
+__pycache__/
+*.pyc
+
+# Fichiers de config locaux / secrets
+.env
