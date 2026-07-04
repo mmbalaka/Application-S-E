@@ -27,3 +27,108 @@ msgstr "Centralize your indicators, targets and achievements, and track your pro
 
 msgid "Application en cours de construction — étape 2 : base de données."
 msgstr "Application under construction — step 2: database."
+
+# ── Intervenants (personnes) ──────────────────────────────
+
+msgid "nom complet"
+msgstr "full name"
+
+msgid "adresse e-mail"
+msgstr "email address"
+
+msgid "téléphone"
+msgstr "phone"
+
+msgid "actif"
+msgstr "active"
+
+msgid "coordinateur"
+msgstr "coordinator"
+
+msgid "coordinateurs"
+msgstr "coordinators"
+
+msgid "Coordinateur dont dépend ce directeur de projet."
+msgstr "Coordinator this project director reports to."
+
+msgid "directeur de projet"
+msgstr "project director"
+
+msgid "directeurs de projet"
+msgstr "project directors"
+
+msgid "suivi-évaluateur"
+msgstr "M&E officer"
+
+msgid "suivi-évaluateurs"
+msgstr "M&E officers"
+
+# ── Projets ───────────────────────────────────────────────
+
+msgid "projet"
+msgstr "project"
+
+msgid "projets"
+msgstr "projects"
+
+msgid "projets suivis"
+msgstr "monitored projects"
+
+msgid "code"
+msgstr "code"
+
+msgid "Code court et unique du projet (ex. : AGR-01)."
+msgstr "Short unique project code (e.g. AGR-01)."
+
+msgid "nom du projet"
+msgstr "project name"
+
+msgid "description"
+msgstr "description"
+
+msgid "domaine d'intervention"
+msgstr "field of intervention"
+
+msgid "Ex. : agriculture, éducation, santé…"
+msgstr "E.g. agriculture, education, health…"
+
+msgid "date de début"
+msgstr "start date"
+
+msgid "date de fin"
+msgstr "end date"
+
+msgid "statut"
+msgstr "status"
+
+msgid "En préparation"
+msgstr "In preparation"
+
+msgid "En cours"
+msgstr "Ongoing"
+
+msgid "Clôturé"
+msgstr "Completed"
+
+msgid "Directeur responsable de ce projet."
+msgstr "Director in charge of this project."
+
+msgid "Un projet peut être suivi par plusieurs suivi-évaluateurs."
+msgstr "A project can be monitored by several M&E officers."
+
+# ── Administration ────────────────────────────────────────
+
+msgid "Lumière du Soleil — Administration S&E"
+msgstr "Lumière du Soleil — M&E Administration"
+
+msgid "Admin S&E"
+msgstr "M&E Admin"
+
+msgid "Gestion du suivi-évaluation"
+msgstr "Monitoring & evaluation management"
+
+msgid "Calendrier"
+msgstr "Schedule"
+
+msgid "Responsables"
+msgstr "People in charge"
