@@ -132,3 +132,173 @@ msgstr "Schedule"
 
 msgid "Responsables"
 msgstr "People in charge"
+
+# ── Indicateurs ───────────────────────────────────────────
+
+msgid "indicateur"
+msgstr "indicator"
+
+msgid "indicateurs"
+msgstr "indicators"
+
+msgid "Référence courte de l'indicateur (ex. : IND-01)."
+msgstr "Short indicator reference (e.g. IND-01)."
+
+msgid "intitulé"
+msgstr "title"
+
+msgid "définition"
+msgstr "definition"
+
+msgid "unité"
+msgstr "unit"
+
+msgid "Ex. : personnes, hectares, tonnes, %…"
+msgstr "E.g. people, hectares, tons, %…"
+
+msgid "niveau"
+msgstr "level"
+
+msgid "Impact"
+msgstr "Impact"
+
+msgid "Effet"
+msgstr "Outcome"
+
+msgid "Produit"
+msgstr "Output"
+
+msgid "mode de calcul"
+msgstr "calculation method"
+
+msgid "méthode de collecte"
+msgstr "collection method"
+
+msgid "source des données"
+msgstr "data source"
+
+msgid "fréquence de collecte"
+msgstr "collection frequency"
+
+msgid "Mensuelle"
+msgstr "Monthly"
+
+msgid "Trimestrielle"
+msgstr "Quarterly"
+
+msgid "Semestrielle"
+msgstr "Half-yearly"
+
+msgid "Annuelle"
+msgstr "Yearly"
+
+msgid "valeur de référence (baseline)"
+msgstr "baseline value"
+
+msgid "cible finale"
+msgstr "final target"
+
+msgid "seuil vert (%)"
+msgstr "green threshold (%)"
+
+msgid "Taux à partir duquel l'indicateur est « Atteint »."
+msgstr "Rate above which the indicator is \"Achieved\"."
+
+msgid "seuil orange (%)"
+msgstr "orange threshold (%)"
+
+msgid "Taux à partir duquel l'indicateur est « À surveiller »."
+msgstr "Rate above which the indicator is \"To watch\"."
+
+# ── Cibles et réalisations ────────────────────────────────
+
+msgid "année"
+msgstr "year"
+
+msgid "numéro de période"
+msgstr "period number"
+
+msgid "Selon la fréquence de l'indicateur : mois (1-12), trimestre (1-4), semestre (1-2) ou 1 si annuelle."
+msgstr "Depending on the indicator's frequency: month (1-12), quarter (1-4), half-year (1-2), or 1 if yearly."
+
+msgid "cible"
+msgstr "target"
+
+msgid "cibles"
+msgstr "targets"
+
+msgid "valeur cible"
+msgstr "target value"
+
+msgid "réalisation"
+msgstr "achievement"
+
+msgid "réalisations"
+msgstr "achievements"
+
+msgid "valeur réalisée"
+msgstr "achieved value"
+
+msgid "commentaire"
+msgstr "comment"
+
+msgid "date de saisie"
+msgstr "entry date"
+
+# ── Sources de vérification ───────────────────────────────
+
+msgid "source de vérification"
+msgstr "means of verification"
+
+msgid "sources de vérification"
+msgstr "means of verification"
+
+msgid "titre"
+msgstr "title"
+
+msgid "fichier"
+msgstr "file"
+
+msgid "date d'ajout"
+msgstr "date added"
+
+# ── Statuts et affichages admin ───────────────────────────
+
+msgid "Atteint"
+msgstr "Achieved"
+
+msgid "À surveiller"
+msgstr "To watch"
+
+msgid "En retard"
+msgstr "Behind"
+
+msgid "Mesure et collecte"
+msgstr "Measurement and collection"
+
+msgid "Valeurs de référence"
+msgstr "Reference values"
+
+msgid "Seuils du code couleur"
+msgstr "Color code thresholds"
+
+msgid "Vert : taux ≥ seuil vert · Orange : taux ≥ seuil orange · Rouge : en dessous."
+msgstr "Green: rate ≥ green threshold · Orange: rate ≥ orange threshold · Red: below."
+
+msgid "cumul réalisé"
+msgstr "cumulative achieved"
+
+msgid "taux cumulé"
+msgstr "cumulative rate"
+
+msgid "période"
+msgstr "period"
+
+msgid "cible période"
+msgstr "period target"
+
+msgid "taux de réalisation"
+msgstr "achievement rate"
+
+msgid "sources"
+msgstr "sources"
