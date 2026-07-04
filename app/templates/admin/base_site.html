@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title }}{% endblock %}
+
+{% block branding %}
+<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header }}</a></div>
+{% endblock %}
+
+{% block userlinks %}
+{% get_current_language as LANGUE_ACTUELLE %}
+<form action="{% url 'set_language' %}" method="post" style="display:inline-flex;gap:4px;align-items:center;margin-right:10px;vertical-align:middle;">
+  {% csrf_token %}
+  <input name="next" type="hidden" value="{{ request.get_full_path }}">
+  <button type="submit" name="language" value="fr"
+    style="cursor:pointer;padding:2px 8px;border-radius:5px;font-size:12px;
+           border:1px solid var(--header-link-color, #ccc);
+           background:{% if LANGUE_ACTUELLE == 'fr' %}var(--header-link-color, #fff){% else %}transparent{% endif %};
+           color:{% if LANGUE_ACTUELLE == 'fr' %}var(--header-bg, #333){% else %}var(--header-link-color, #fff){% endif %};
+           font-weight:{% if LANGUE_ACTUELLE == 'fr' %}700{% else %}400{% endif %};">FR</button>
+  <button type="submit" name="language" value="en"
+    style="cursor:pointer;padding:2px 8px;border-radius:5px;font-size:12px;
+           border:1px solid var(--header-link-color, #ccc);
+           background:{% if LANGUE_ACTUELLE == 'en' %}var(--header-link-color, #fff){% else %}transparent{% endif %};
+           color:{% if LANGUE_ACTUELLE == 'en' %}var(--header-bg, #333){% else %}var(--header-link-color, #fff){% endif %};
+           font-weight:{% if LANGUE_ACTUELLE == 'en' %}700{% else %}400{% endif %};">EN</button>
+</form>
+{{ block.super }}
+{% endblock %}
