@@ -30,6 +30,15 @@ class Coordinateur(PersonneBase):
         verbose_name = _("coordinateur")
         verbose_name_plural = _("coordinateurs")
 
+    @property
+    def taux_moyen(self):
+        """Taux moyen de tous les indicateurs des projets sous sa coordination."""
+        return _taux_moyen(
+            Indicateur.objects.filter(
+                projet__directeur__coordinateur=self, actif=True
+            )
+        )
+
 
 class DirecteurProjet(PersonneBase):
     """Directeur de projet : rattaché à un coordinateur, dirige plusieurs projets."""
@@ -47,6 +56,13 @@ class DirecteurProjet(PersonneBase):
     class Meta(PersonneBase.Meta):
         verbose_name = _("directeur de projet")
         verbose_name_plural = _("directeurs de projet")
+
+    @property
+    def taux_moyen(self):
+        """Taux moyen de tous les indicateurs de son portefeuille de projets."""
+        return _taux_moyen(
+            Indicateur.objects.filter(projet__directeur=self, actif=True)
+        )
 
 
 class SuiviEvaluateur(PersonneBase):
@@ -109,19 +125,61 @@ class Projet(models.Model):
     def __str__(self):
         return f"{self.code} — {self.nom}"
 
+    @property
+    def taux_moyen(self):
+        """Taux moyen des indicateurs actifs du projet (agrégation niveau projet)."""
+        return _taux_moyen(self.indicateurs.filter(actif=True))
+
 
 # ══════════════════════════════════════════════════════════════
 #  Cœur du S&E : indicateurs, cibles, réalisations, sources
 # ══════════════════════════════════════════════════════════════
 
 
+def _taux_moyen(indicateurs):
+    """Moyenne des taux cumulés d'un ensemble d'indicateurs (agrégation)."""
+    taux = [i.taux_final for i in indicateurs if i.taux_final is not None]
+    if not taux:
+        return None
+    return round(sum(taux) / len(taux))
+
+
+class AxeDesagregation(models.Model):
+    """Axe de ventilation des données (ex. : sexe, tranche d'âge, zone)."""
+
+    nom = models.CharField(_("nom de l'axe"), max_length=100, unique=True)
+    modalites = models.CharField(
+        _("modalités"),
+        max_length=250,
+        help_text=_("Valeurs possibles, séparées par des virgules (ex. : Homme, Femme)."),
+    )
+
+    class Meta:
+        verbose_name = _("axe de désagrégation")
+        verbose_name_plural = _("axes de désagrégation")
+        ordering = ["nom"]
+
+    def __str__(self):
+        return self.nom
+
+    def liste_modalites(self):
+        return [m.strip() for m in self.modalites.split(",") if m.strip()]
+
+
 class Indicateur(models.Model):
     """Indicateur de performance rattaché à un projet."""
 
     class Niveau(models.TextChoices):
+        INTRANT = "intrant", _("Intrant")
+        PROCESSUS = "processus", _("Processus")
+        PRODUIT = "produit", _("Produit / Extrant")
+        EFFET = "effet", _("Résultat / Effet")
         IMPACT = "impact", _("Impact")
-        EFFET = "effet", _("Effet")
-        PRODUIT = "produit", _("Produit")
+
+    class TypeValeur(models.TextChoices):
+        NOMBRE = "nombre", _("Nombre (valeur saisie directement)")
+        POURCENTAGE = "pourcentage", _("Pourcentage (numérateur ÷ dénominateur × 100)")
+        RATIO = "ratio", _("Ratio (numérateur ÷ dénominateur)")
 
     class Frequence(models.TextChoices):
         MENSUELLE = "mensuelle", _("Mensuelle")
@@ -149,11 +207,46 @@ class Indicateur(models.Model):
         help_text=_("Ex. : personnes, hectares, tonnes, %…"),
     )
     niveau = models.CharField(
-        _("niveau"), max_length=10, choices=Niveau.choices, default=Niveau.PRODUIT
+        _("type d'indicateur"), max_length=10, choices=Niveau.choices, default=Niveau.PRODUIT
     )
-    mode_calcul = models.TextField(_("mode de calcul"), blank=True)
+    type_valeur = models.CharField(
+        _("mode de calcul de la valeur"),
+        max_length=15,
+        choices=TypeValeur.choices,
+        default=TypeValeur.NOMBRE,
+        help_text=_(
+            "Pourcentage ou ratio : la valeur se calcule automatiquement à partir "
+            "du numérateur et du dénominateur saisis à chaque période."
+        ),
+    )
+    numerateur_libelle = models.CharField(
+        _("libellé du numérateur"),
+        max_length=200,
+        blank=True,
+        help_text=_("Ex. : nombre de producteurs formés."),
+    )
+    denominateur_libelle = models.CharField(
+        _("libellé du dénominateur"),
+        max_length=200,
+        blank=True,
+        help_text=_("Ex. : nombre total de producteurs ciblés."),
+    )
+    mode_calcul = models.TextField(_("formule / mode de calcul (description)"), blank=True)
     methode_collecte = models.CharField(_("méthode de collecte"), max_length=200, blank=True)
     source_donnees = models.CharField(_("source des données"), max_length=200, blank=True)
+    moyen_verification = models.CharField(
+        _("moyen de vérification"),
+        max_length=250,
+        blank=True,
+        help_text=_("Ex. : rapports de formation, listes de présence…"),
+    )
+    desagregations = models.ManyToManyField(
+        AxeDesagregation,
+        verbose_name=_("axes de désagrégation"),
+        related_name="indicateurs",
+        blank=True,
+        help_text=_("Ventilations attendues pour cet indicateur (sexe, âge, zone…)."),
+    )
     frequence = models.CharField(
         _("fréquence de collecte"),
         max_length=15,
@@ -283,11 +376,43 @@ class Cible(MesurePeriodique):
 
 
 class Realisation(MesurePeriodique):
-    """Valeur réellement atteinte pour un indicateur sur une période."""
+    """Valeur réellement atteinte pour un indicateur sur une période.
 
-    valeur = models.DecimalField(_("valeur réalisée"), max_digits=14, decimal_places=2)
+    Pour un indicateur de type pourcentage ou ratio, saisir le numérateur et
+    le dénominateur : la valeur est calculée automatiquement.
+    """
+
+    valeur = models.DecimalField(
+        _("valeur réalisée"),
+        max_digits=14,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        help_text=_(
+            "Laisser vide si numérateur et dénominateur sont saisis "
+            "(calcul automatique)."
+        ),
+    )
+    numerateur = models.DecimalField(
+        _("numérateur"), max_digits=14, decimal_places=2, null=True, blank=True
+    )
+    denominateur = models.DecimalField(
+        _("dénominateur"), max_digits=14, decimal_places=2, null=True, blank=True
+    )
     commentaire = models.TextField(_("commentaire"), blank=True)
     date_saisie = models.DateTimeField(_("date de saisie"), auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        # Calcul automatique de la valeur pour les pourcentages et ratios
+        if self.numerateur is not None and self.denominateur:
+            base = float(self.numerateur) / float(self.denominateur)
+            if self.indicateur.type_valeur == Indicateur.TypeValeur.POURCENTAGE:
+                self.valeur = round(base * 100, 2)
+            elif self.indicateur.type_valeur == Indicateur.TypeValeur.RATIO:
+                self.valeur = round(base, 4)
+            elif self.valeur is None:
+                self.valeur = self.numerateur
+        super().save(*args, **kwargs)
 
     class Meta(MesurePeriodique.Meta):
         verbose_name = _("réalisation")
@@ -310,7 +435,7 @@ class Realisation(MesurePeriodique):
     def taux(self):
         """Taux de réalisation périodique : (réalisé ÷ cible période) × 100."""
         cible = self.cible_correspondante
-        if cible is None or not cible.valeur:
+        if self.valeur is None or cible is None or not cible.valeur:
             return None
         return round(float(self.valeur) / float(cible.valeur) * 100)
 
@@ -318,9 +443,14 @@ class Realisation(MesurePeriodique):
     def ecart_absolu(self):
         """Écart absolu : réalisé − cible."""
         cible = self.cible_correspondante
-        if cible is None:
+        if self.valeur is None or cible is None:
             return None
         return self.valeur - cible.valeur
+
+    @property
+    def somme_ventilations(self):
+        """Total des valeurs ventilées (contrôle de cohérence)."""
+        return self.ventilations.aggregate(total=models.Sum("valeur"))["total"]
 
     @property
     def ecart_relatif(self):
@@ -334,6 +464,41 @@ class Realisation(MesurePeriodique):
     def statut(self):
         """Code couleur de la période : vert / orange / rouge."""
         return self.indicateur.statut_pour(self.taux)
+
+
+class VentilationRealisation(models.Model):
+    """Valeur d'une réalisation ventilée selon un axe (ex. : Femmes = 120)."""
+
+    realisation = models.ForeignKey(
+        Realisation,
+        verbose_name=_("réalisation"),
+        related_name="ventilations",
+        on_delete=models.CASCADE,
+    )
+    axe = models.ForeignKey(
+        AxeDesagregation,
+        verbose_name=_("axe de désagrégation"),
+        on_delete=models.CASCADE,
+    )
+    modalite = models.CharField(
+        _("modalité"),
+        max_length=100,
+        help_text=_("Ex. : Homme, Femme, 15-24 ans, Zone Nord…"),
+    )
+    valeur = models.DecimalField(_("valeur"), max_digits=14, decimal_places=2)
+
+    class Meta:
+        verbose_name = _("ventilation")
+        verbose_name_plural = _("ventilations")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["realisation", "axe", "modalite"],
+                name="ventilation_unique_par_modalite",
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.axe} · {self.modalite} = {self.valeur}"
 
 
 class SourceVerification(models.Model):

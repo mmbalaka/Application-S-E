@@ -302,3 +302,179 @@ msgstr "achievement rate"
 
 msgid "sources"
 msgstr "sources"
+
+# ── Types d'indicateurs et calculs ────────────────────────
+
+msgid "type d'indicateur"
+msgstr "indicator type"
+
+msgid "Intrant"
+msgstr "Input"
+
+msgid "Processus"
+msgstr "Process"
+
+msgid "Produit / Extrant"
+msgstr "Output"
+
+msgid "Résultat / Effet"
+msgstr "Outcome"
+
+msgid "mode de calcul de la valeur"
+msgstr "value calculation mode"
+
+msgid "Nombre (valeur saisie directement)"
+msgstr "Number (value entered directly)"
+
+msgid "Pourcentage (numérateur ÷ dénominateur × 100)"
+msgstr "Percentage (numerator ÷ denominator × 100)"
+
+msgid "Ratio (numérateur ÷ dénominateur)"
+msgstr "Ratio (numerator ÷ denominator)"
+
+msgid "Pourcentage ou ratio : la valeur se calcule automatiquement à partir du numérateur et du dénominateur saisis à chaque période."
+msgstr "Percentage or ratio: the value is computed automatically from the numerator and denominator entered each period."
+
+msgid "libellé du numérateur"
+msgstr "numerator label"
+
+msgid "Ex. : nombre de producteurs formés."
+msgstr "E.g. number of trained producers."
+
+msgid "libellé du dénominateur"
+msgstr "denominator label"
+
+msgid "Ex. : nombre total de producteurs ciblés."
+msgstr "E.g. total number of targeted producers."
+
+msgid "formule / mode de calcul (description)"
+msgstr "formula / calculation method (description)"
+
+msgid "moyen de vérification"
+msgstr "means of verification"
+
+msgid "Ex. : rapports de formation, listes de présence…"
+msgstr "E.g. training reports, attendance lists…"
+
+msgid "numérateur"
+msgstr "numerator"
+
+msgid "dénominateur"
+msgstr "denominator"
+
+msgid "Laisser vide si numérateur et dénominateur sont saisis (calcul automatique)."
+msgstr "Leave empty if numerator and denominator are entered (computed automatically)."
+
+# ── Désagrégation ─────────────────────────────────────────
+
+msgid "axe de désagrégation"
+msgstr "disaggregation axis"
+
+msgid "axes de désagrégation"
+msgstr "disaggregation axes"
+
+msgid "nom de l'axe"
+msgstr "axis name"
+
+msgid "modalités"
+msgstr "categories"
+
+msgid "Valeurs possibles, séparées par des virgules (ex. : Homme, Femme)."
+msgstr "Possible values, comma-separated (e.g. Male, Female)."
+
+msgid "Ventilations attendues pour cet indicateur (sexe, âge, zone…)."
+msgstr "Expected breakdowns for this indicator (sex, age, area…)."
+
+msgid "ventilation"
+msgstr "breakdown"
+
+msgid "ventilations"
+msgstr "breakdowns"
+
+msgid "modalité"
+msgstr "category"
+
+msgid "Ex. : Homme, Femme, 15-24 ans, Zone Nord…"
+msgstr "E.g. Male, Female, 15-24 years, North area…"
+
+msgid "valeur"
+msgstr "value"
+
+msgid "total ventilé"
+msgstr "breakdown total"
+
+msgid "Différent de la valeur réalisée"
+msgstr "Differs from the achieved value"
+
+msgid "indicateurs concernés"
+msgstr "related indicators"
+
+msgid "Désagrégation"
+msgstr "Disaggregation"
+
+# ── Agrégation hiérarchique ───────────────────────────────
+
+msgid "performance consolidée"
+msgstr "consolidated performance"
+
+msgid "performance du portefeuille"
+msgstr "portfolio performance"
+
+msgid "performance du projet"
+msgstr "project performance"
+
+# ── Import CSV / Excel ────────────────────────────────────
+
+msgid "Importer des indicateurs (CSV ou Excel)"
+msgstr "Import indicators (CSV or Excel)"
+
+msgid "Importer des indicateurs"
+msgstr "Import indicators"
+
+msgid "Importer"
+msgstr "Import"
+
+msgid "Annuler"
+msgstr "Cancel"
+
+msgid "Importer (CSV / Excel)"
+msgstr "Import (CSV / Excel)"
+
+msgid "Projet"
+msgstr "Project"
+
+msgid "Les indicateurs importés seront rattachés à ce projet."
+msgstr "Imported indicators will be attached to this project."
+
+msgid "Fichier CSV ou Excel"
+msgstr "CSV or Excel file"
+
+msgid "Formats acceptés : .csv, .xlsx — la première ligne doit contenir les entêtes."
+msgstr "Accepted formats: .csv, .xlsx — the first row must contain the headers."
+
+msgid "Colonnes reconnues dans le fichier"
+msgstr "Recognized file columns"
+
+msgid "intrant, processus, produit, effet, impact"
+msgstr "input, process, output, outcome, impact"
+
+msgid "mensuelle, trimestrielle, semestrielle, annuelle"
+msgstr "monthly, quarterly, half-yearly, yearly"
+
+msgid "Les accents et majuscules dans les entêtes sont ignorés. Si un indicateur du même projet porte déjà le même code ou le même intitulé, il est mis à jour (pas de doublon)."
+msgstr "Accents and capitals in headers are ignored. If an indicator of the same project already has the same code or title, it is updated (no duplicate)."
+
+msgid "Encodage du fichier non reconnu (utiliser UTF-8)."
+msgstr "Unrecognized file encoding (use UTF-8)."
+
+msgid "Le fichier est vide."
+msgstr "The file is empty."
+
+msgid "Colonne « intitulé » introuvable. Entêtes lues : %(entetes)s"
+msgstr "Column \"title\" not found. Headers read: %(entetes)s"
+
+msgid "Ligne %(n)s : intitulé manquant — ignorée."
+msgstr "Row %(n)s: missing title — skipped."
+
+msgid "%(projet)s : %(crees)s indicateur(s) créé(s), %(maj)s mis à jour."
+msgstr "%(projet)s: %(crees)s indicator(s) created, %(maj)s updated."

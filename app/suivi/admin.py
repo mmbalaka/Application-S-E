@@ -3,7 +3,13 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
+from django.shortcuts import redirect, render
+from django.urls import path
+
+from .forms import ImportIndicateursForm
+from .importation import importer_indicateurs
 from .models import (
+    AxeDesagregation,
     Cible,
     Coordinateur,
     DirecteurProjet,
@@ -12,6 +18,7 @@ from .models import (
     Realisation,
     SourceVerification,
     SuiviEvaluateur,
+    VentilationRealisation,
 )
 
 # Couleurs du code visuel (design Lumière du Soleil)
@@ -23,11 +30,16 @@ LIBELLES_STATUT = {
 }
 
 
-def badge_taux(indicateur, taux):
-    """Pastille colorée « 95 % » selon les seuils de l'indicateur."""
+def badge(taux, seuil_vert=90, seuil_orange=70):
+    """Pastille colorée « ● 95 % · Atteint » selon des seuils donnés."""
     if taux is None:
         return format_html('<span style="color:#999;">—</span>')
-    statut = indicateur.statut_pour(taux)
+    if taux >= seuil_vert:
+        statut = "vert"
+    elif taux >= seuil_orange:
+        statut = "orange"
+    else:
+        statut = "rouge"
     return format_html(
         '<span style="color:{};font-weight:600;">● {} %</span>'
         '<span style="color:#777;"> · {}</span>',
@@ -35,6 +47,11 @@ def badge_taux(indicateur, taux):
         taux,
         LIBELLES_STATUT[statut],
     )
+
+
+def badge_taux(indicateur, taux):
+    """Pastille colorée selon les seuils propres à l'indicateur."""
+    return badge(taux, indicateur.seuil_vert, indicateur.seuil_orange)
 
 # En-têtes de l'admin
 admin.site.site_header = _("Lumière du Soleil — Administration S&E")
@@ -61,7 +78,7 @@ class ProjetInline(admin.TabularInline):
 
 @admin.register(Coordinateur)
 class CoordinateurAdmin(admin.ModelAdmin):
-    list_display = ("nom", "email", "telephone", "nb_directeurs", "actif")
+    list_display = ("nom", "email", "telephone", "nb_directeurs", "performance", "actif")
     list_filter = ("actif",)
     search_fields = ("nom", "email")
     inlines = [DirecteurInline]
@@ -70,10 +87,14 @@ class CoordinateurAdmin(admin.ModelAdmin):
     def nb_directeurs(self, obj):
         return obj.directeurs.count()
 
+    @admin.display(description=_("performance consolidée"))
+    def performance(self, obj):
+        return badge(obj.taux_moyen)
+
 
 @admin.register(DirecteurProjet)
 class DirecteurProjetAdmin(admin.ModelAdmin):
-    list_display = ("nom", "coordinateur", "email", "nb_projets", "actif")
+    list_display = ("nom", "coordinateur", "email", "nb_projets", "performance", "actif")
     list_filter = ("actif", "coordinateur")
     search_fields = ("nom", "email")
     inlines = [ProjetInline]
@@ -81,6 +102,10 @@ class DirecteurProjetAdmin(admin.ModelAdmin):
     @admin.display(description=_("projets"))
     def nb_projets(self, obj):
         return obj.projets.count()
+
+    @admin.display(description=_("performance du portefeuille"))
+    def performance(self, obj):
+        return badge(obj.taux_moyen)
 
 
 @admin.register(SuiviEvaluateur)
@@ -96,7 +121,7 @@ class SuiviEvaluateurAdmin(admin.ModelAdmin):
 
 @admin.register(Projet)
 class ProjetAdmin(admin.ModelAdmin):
-    list_display = ("code", "nom", "directeur", "statut", "nb_indicateurs", "date_debut", "date_fin")
+    list_display = ("code", "nom", "directeur", "statut", "nb_indicateurs", "performance", "date_debut", "date_fin")
     list_filter = ("statut", "directeur", "suivi_evaluateurs")
     search_fields = ("code", "nom", "description")
     filter_horizontal = ("suivi_evaluateurs",)
@@ -109,6 +134,10 @@ class ProjetAdmin(admin.ModelAdmin):
     @admin.display(description=_("indicateurs"))
     def nb_indicateurs(self, obj):
         return obj.indicateurs.count()
+
+    @admin.display(description=_("performance du projet"))
+    def performance(self, obj):
+        return badge(obj.taux_moyen)
 
 
 # ══════════════════════════════════════════════════════════════
@@ -144,13 +173,27 @@ class IndicateurAdmin(admin.ModelAdmin):
     list_filter = ("projet", "niveau", "frequence", "actif")
     search_fields = ("code", "intitule", "definition")
     inlines = [CibleInline, RealisationInline]
+    filter_horizontal = ("desagregations",)
     fieldsets = (
         (None, {"fields": ("projet", "code", "intitule", "definition", "niveau", "actif")}),
         (
             _("Mesure et collecte"),
-            {"fields": ("unite", "frequence", "mode_calcul", "methode_collecte", "source_donnees")},
+            {
+                "fields": (
+                    "unite",
+                    "frequence",
+                    "type_valeur",
+                    "numerateur_libelle",
+                    "denominateur_libelle",
+                    "mode_calcul",
+                    "methode_collecte",
+                    "source_donnees",
+                    "moyen_verification",
+                )
+            },
         ),
         (_("Valeurs de référence"), {"fields": ("baseline", "cible_finale")}),
+        (_("Désagrégation"), {"fields": ("desagregations",)}),
         (
             _("Seuils du code couleur"),
             {
@@ -161,6 +204,49 @@ class IndicateurAdmin(admin.ModelAdmin):
             },
         ),
     )
+
+    # ── Import CSV / Excel ──
+    def get_urls(self):
+        urls = super().get_urls()
+        return [
+            path(
+                "importer/",
+                self.admin_site.admin_view(self.vue_import),
+                name="suivi_indicateur_importer",
+            ),
+        ] + urls
+
+    def vue_import(self, request):
+        """Téléversement d'une liste d'indicateurs pour un projet."""
+        form = ImportIndicateursForm(request.POST or None, request.FILES or None)
+        if request.method == "POST" and form.is_valid():
+            projet = form.cleaned_data["projet"]
+            fichier = form.cleaned_data["fichier"]
+            try:
+                crees, mis_a_jour, erreurs = importer_indicateurs(
+                    projet, fichier, fichier.name
+                )
+            except Exception as exc:  # fichier illisible, format inattendu…
+                form.add_error("fichier", str(exc))
+            else:
+                self.message_user(
+                    request,
+                    _(
+                        "%(projet)s : %(crees)s indicateur(s) créé(s), "
+                        "%(maj)s mis à jour."
+                    )
+                    % {"projet": projet, "crees": crees, "maj": mis_a_jour},
+                )
+                for erreur in erreurs:
+                    self.message_user(request, erreur, level="WARNING")
+                return redirect("..")
+        contexte = {
+            **self.admin_site.each_context(request),
+            "form": form,
+            "title": _("Importer des indicateurs"),
+            "opts": self.model._meta,
+        }
+        return render(request, "admin/suivi/indicateur/importer.html", contexte)
 
     @admin.display(description=_("cumul réalisé"))
     def cumul(self, obj):
@@ -177,6 +263,13 @@ class SourceInline(admin.TabularInline):
     fields = ("titre", "fichier")
 
 
+class VentilationInline(admin.TabularInline):
+    """Ventilation de la réalisation par axe (sexe, âge, zone…)."""
+
+    model = VentilationRealisation
+    extra = 0
+
+
 @admin.register(Realisation)
 class RealisationAdmin(admin.ModelAdmin):
     list_display = (
@@ -185,11 +278,34 @@ class RealisationAdmin(admin.ModelAdmin):
         "valeur",
         "cible_periode",
         "taux_affiche",
+        "total_ventile",
         "nb_sources",
     )
     list_filter = ("indicateur__projet", "annee")
     search_fields = ("indicateur__intitule", "indicateur__code", "commentaire")
-    inlines = [SourceInline]
+    inlines = [VentilationInline, SourceInline]
+    fields = (
+        "indicateur",
+        "annee",
+        "periode",
+        "valeur",
+        "numerateur",
+        "denominateur",
+        "commentaire",
+    )
+
+    @admin.display(description=_("total ventilé"))
+    def total_ventile(self, obj):
+        total = obj.somme_ventilations
+        if total is None:
+            return "—"
+        if obj.valeur is not None and total != obj.valeur:
+            return format_html(
+                '<span style="color:#c64545;" title="{}">{} ⚠</span>',
+                _("Différent de la valeur réalisée"),
+                total,
+            )
+        return total
 
     @admin.display(description=_("période"))
     def periode_affichee(self, obj):
@@ -225,3 +341,13 @@ class SourceVerificationAdmin(admin.ModelAdmin):
     list_display = ("titre", "realisation", "date_ajout")
     search_fields = ("titre",)
     list_filter = ("date_ajout",)
+
+
+@admin.register(AxeDesagregation)
+class AxeDesagregationAdmin(admin.ModelAdmin):
+    list_display = ("nom", "modalites", "nb_indicateurs")
+    search_fields = ("nom",)
+
+    @admin.display(description=_("indicateurs concernés"))
+    def nb_indicateurs(self, obj):
+        return obj.indicateurs.count()

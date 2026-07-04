@@ -1,0 +1,27 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+<h1>{% trans "Importer des indicateurs (CSV ou Excel)" %}</h1>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" class="default" value="{% trans 'Importer' %}">
+  <a class="button" href="../">{% trans "Annuler" %}</a>
+</form>
+
+<div class="module" style="margin-top:24px;padding:12px 16px;">
+  <h2>{% trans "Colonnes reconnues dans le fichier" %}</h2>
+  <p style="max-width:820px;">
+    <code>code</code> · <code>intitulé</code> (obligatoire) · <code>définition</code> ·
+    <code>type</code> ({% trans "intrant, processus, produit, effet, impact" %}) ·
+    <code>unité</code> · <code>baseline</code> · <code>cible finale</code> ·
+    <code>fréquence</code> ({% trans "mensuelle, trimestrielle, semestrielle, annuelle" %}) ·
+    <code>formule de calcul</code> · <code>méthode de collecte</code> ·
+    <code>source de données</code> · <code>moyen de vérification</code> ·
+    <code>numérateur</code> · <code>dénominateur</code>
+  </p>
+  <p>{% trans "Les accents et majuscules dans les entêtes sont ignorés. Si un indicateur du même projet porte déjà le même code ou le même intitulé, il est mis à jour (pas de doublon)." %}</p>
+</div>
+{% endblock %}
