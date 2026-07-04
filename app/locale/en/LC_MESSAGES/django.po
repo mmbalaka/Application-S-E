@@ -1,0 +1,29 @@
+# Traductions anglaises — Application S&E Lumière du Soleil
+# Fichier maintenu à la main (gettext non disponible sous Windows).
+# Compiler avec : python scripts/compile_translations.py
+msgid ""
+msgstr ""
+"Project-Id-Version: application-se\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Lumière du Soleil — Suivi & Évaluation"
+msgstr "Lumière du Soleil — Monitoring & Evaluation"
+
+msgid "Lumière du Soleil"
+msgstr "Lumière du Soleil"
+
+msgid "Suivi-évaluation"
+msgstr "Monitoring & Evaluation"
+
+msgid "Bienvenue dans l'application de suivi-évaluation"
+msgstr "Welcome to the monitoring and evaluation application"
+
+msgid "Centralisez vos indicateurs, cibles et réalisations, et suivez la performance de vos projets en temps réel."
+msgstr "Centralize your indicators, targets and achievements, and track your projects' performance in real time."
+
+msgid "Application en cours de construction — étape 2 : base de données."
+msgstr "Application under construction — step 2: database."

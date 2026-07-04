@@ -1,3 +1,7 @@
+"""Vues de l'application suivi."""
 from django.shortcuts import render
 
-# Create your views here.
+
+def accueil(request):
+    """Page d'accueil provisoire (démonstration du bilinguisme)."""
+    return render(request, "suivi/accueil.html")
