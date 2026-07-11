@@ -25,6 +25,11 @@
     <h3 style="margin:0 0 6px;color:var(--ink);font-size:17px;">{% trans "Site de l'association" %}</h3>
     <p style="margin:0;font-size:14px;color:var(--muted);">{% trans "Retourner au site vitrine public." %}</p>
   </a>
+  <a href="{% url 'vitrine:mot_de_passe' %}" style="text-decoration:none;background:#fff;border:1px solid var(--hairline);border-radius:12px;padding:22px;display:block;">
+    <div style="font-size:26px;margin-bottom:8px;">🔒</div>
+    <h3 style="margin:0 0 6px;color:var(--ink);font-size:17px;">{% trans "Changer mon mot de passe" %}</h3>
+    <p style="margin:0;font-size:14px;color:var(--muted);">{% trans "Définir un mot de passe personnel et sécurisé." %}</p>
+  </a>
 </div>
 
 <form action="{% url 'vitrine:deconnexion' %}" method="post" style="margin-top:30px;">

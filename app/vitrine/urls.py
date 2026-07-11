@@ -20,4 +20,19 @@ urlpatterns = [
         name="connexion",
     ),
     path("deconnexion/", auth_views.LogoutView.as_view(), name="deconnexion"),
+    path(
+        "mot-de-passe/",
+        auth_views.PasswordChangeView.as_view(
+            template_name="vitrine/mot_de_passe.html",
+            success_url="/mot-de-passe/ok/",
+        ),
+        name="mot_de_passe",
+    ),
+    path(
+        "mot-de-passe/ok/",
+        auth_views.PasswordChangeDoneView.as_view(
+            template_name="vitrine/mot_de_passe_ok.html"
+        ),
+        name="mot_de_passe_ok",
+    ),
 ]

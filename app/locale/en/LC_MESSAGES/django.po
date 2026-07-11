@@ -504,3 +504,9 @@ msgstr "Back to the public website."
 
 msgid "Se déconnecter"
 msgstr "Log out"
+
+msgid "Changer mon mot de passe"
+msgstr "Change my password"
+
+msgid "Définir un mot de passe personnel et sécurisé."
+msgstr "Set a personal, secure password."
