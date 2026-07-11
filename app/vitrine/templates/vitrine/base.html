@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Lumière du Soleil — association d'appui au développement : agriculture, environnement, éducation, santé. Suivi-évaluation transparent de nos projets.">
+<title>{% block titre %}Lumière du Soleil — Association de développement{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'vitrine/style.css' %}">
+</head>
+<body>
+
+<header class="entete">
+  <div class="entete-inner">
+    <a class="logo" href="{% url 'vitrine:accueil' %}">
+      <span class="soleil">☀</span> Lumière du Soleil
+    </a>
+    <input type="checkbox" id="menu-mobile" class="burger">
+    <label for="menu-mobile" class="burger-btn">☰</label>
+    <nav class="nav">
+      <a href="{% url 'vitrine:accueil' %}" {% if request.resolver_match.url_name == 'accueil' %}class="actif"{% endif %}>Accueil</a>
+      <a href="{% url 'vitrine:apropos' %}" {% if request.resolver_match.url_name == 'apropos' %}class="actif"{% endif %}>À propos</a>
+      <a href="{% url 'vitrine:services' %}" {% if request.resolver_match.url_name == 'services' %}class="actif"{% endif %}>Nos services</a>
+      <a href="{% url 'vitrine:projets' %}" {% if request.resolver_match.url_name == 'projets' %}class="actif"{% endif %}>Projets</a>
+      <a href="{% url 'vitrine:contact' %}" {% if request.resolver_match.url_name == 'contact' %}class="actif"{% endif %}>Contact</a>
+      {% if user.is_authenticated %}
+        <a class="btn-app" href="/app/">Ouvrir l'application</a>
+      {% else %}
+        <a class="btn-app" href="{% url 'vitrine:acces' %}">Accéder à l'application</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+  <div class="message {{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<main>
+{% block contenu %}{% endblock %}
+</main>
+
+<footer class="pied">
+  <div class="pied-grille">
+    <div>
+      <span class="logo-pied"><span class="soleil">☀</span> Lumière du Soleil</span>
+      <p>
+        Association d'appui au développement communautaire.
+        Nous intervenons dans l'agriculture, l'environnement, l'entreprenariat,
+        l'éducation, la protection de l'enfance et la santé — avec un
+        suivi-évaluation rigoureux et transparent de chacun de nos projets.
+      </p>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <a href="{% url 'vitrine:accueil' %}">Accueil</a>
+      <a href="{% url 'vitrine:apropos' %}">À propos</a>
+      <a href="{% url 'vitrine:services' %}">Nos services</a>
+      <a href="{% url 'vitrine:projets' %}">Projets</a>
+      <a href="{% url 'vitrine:contact' %}">Contact</a>
+    </div>
+    <div>
+      <h4>Nous contacter</h4>
+      <p>📧 contact@lumieredusoleil.org</p>
+      <p>📞 +243 000 000 000</p>
+      <p>📍 Adresse de l'association</p>
+      <a href="{% url 'vitrine:acces' %}" style="margin-top:10px;color:var(--coral);">→ Accéder à l'application S&amp;E</a>
+    </div>
+  </div>
+  <div class="pied-bas">
+    © 2026 Lumière du Soleil — Tous droits réservés
+  </div>
+</footer>
+
+</body>
+</html>

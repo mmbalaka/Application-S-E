@@ -1,0 +1,46 @@
+{% extends "vitrine/base.html" %}
+
+{% block titre %}Connexion — Lumière du Soleil{% endblock %}
+
+{% block contenu %}
+<section class="bandeau-page">
+  <div class="conteneur">
+    <h1>Connexion</h1>
+    <p>Accédez à la plateforme de suivi-évaluation.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    <div class="form-carte">
+      <h2>Se connecter</h2>
+      <p class="sous-titre">Utilisez l'identifiant qui vous a été communiqué (votre adresse e-mail).</p>
+
+      {% if form.errors %}
+      <div class="message error" style="margin-bottom:16px;">
+        Identifiant ou mot de passe incorrect. Veuillez réessayer.
+      </div>
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+        <p>
+          <label for="id_username">Identifiant (adresse e-mail)</label>
+          <input type="text" name="username" id="id_username" required autofocus>
+        </p>
+        <p>
+          <label for="id_password">Mot de passe</label>
+          <input type="password" name="password" id="id_password" required>
+        </p>
+        <input type="hidden" name="next" value="{{ next|default:'/app/' }}">
+        <button type="submit" class="btn btn-plein">Se connecter</button>
+      </form>
+
+      <p style="text-align:center;margin-top:20px;font-size:14.5px;color:var(--sourdine);">
+        Pas encore de compte ?
+        <a href="{% url 'vitrine:demande_compte' %}">Faire une demande</a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

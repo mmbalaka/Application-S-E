@@ -1,0 +1,124 @@
+{% extends "vitrine/base.html" %}
+
+{% block titre %}À propos — Lumière du Soleil{% endblock %}
+
+{% block contenu %}
+<section class="bandeau-page">
+  <div class="conteneur">
+    <h1>À propos de nous</h1>
+    <p>Une association engagée, une action mesurée, des résultats vérifiables.</p>
+  </div>
+</section>
+
+<!-- Vision & mission -->
+<section class="section">
+  <div class="conteneur">
+    <div class="grille" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));">
+      <div class="carte">
+        <div class="icone">🌅</div>
+        <h3>Notre vision</h3>
+        <p>
+          Des communautés autonomes et résilientes, où chaque personne peut
+          développer son potentiel dans un environnement sain et solidaire.
+        </p>
+      </div>
+      <div class="carte">
+        <div class="icone">🎯</div>
+        <h3>Notre mission</h3>
+        <p>
+          Concevoir et mettre en œuvre des projets de développement à fort impact
+          dans nos six domaines d'intervention, en plaçant la redevabilité et la
+          mesure des résultats au centre de notre démarche.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Valeurs -->
+<section class="section fond-creme">
+  <div class="conteneur">
+    <div class="section-titre">
+      <h2>Nos valeurs</h2>
+    </div>
+    <div class="grille" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr));">
+      <div class="carte">
+        <div class="icone">🤝</div>
+        <h3>Solidarité</h3>
+        <p>Nous agissons avec et pour les communautés, dans le respect de leur dignité.</p>
+      </div>
+      <div class="carte">
+        <div class="icone">🔍</div>
+        <h3>Transparence</h3>
+        <p>Nos résultats sont mesurés, documentés et accessibles à nos partenaires.</p>
+      </div>
+      <div class="carte">
+        <div class="icone">📊</div>
+        <h3>Rigueur</h3>
+        <p>Chaque projet est piloté par des indicateurs précis et des cibles claires.</p>
+      </div>
+      <div class="carte">
+        <div class="icone">🌱</div>
+        <h3>Durabilité</h3>
+        <p>Nous privilégions des solutions pérennes, portées par les acteurs locaux.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Équipe -->
+<section class="section">
+  <div class="conteneur">
+    <div class="section-titre">
+      <h2>Notre équipe</h2>
+      <p>Une organisation claire : coordination, direction de projets et suivi-évaluation.</p>
+    </div>
+
+    {% if coordinateurs or directeurs or evaluateurs %}
+      {% if coordinateurs %}
+      <div class="equipe-groupe">
+        <h3>Coordination</h3>
+        <div class="equipe-liste">
+          {% for personne in coordinateurs %}
+          <div class="membre">
+            <div class="avatar">{{ personne.nom|first|upper }}</div>
+            <div class="nom">{{ personne.nom }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% if directeurs %}
+      <div class="equipe-groupe">
+        <h3>Direction de projets</h3>
+        <div class="equipe-liste">
+          {% for personne in directeurs %}
+          <div class="membre">
+            <div class="avatar">{{ personne.nom|first|upper }}</div>
+            <div class="nom">{{ personne.nom }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% if evaluateurs %}
+      <div class="equipe-groupe">
+        <h3>Suivi-évaluation</h3>
+        <div class="equipe-liste">
+          {% for personne in evaluateurs %}
+          <div class="membre">
+            <div class="avatar">{{ personne.nom|first|upper }}</div>
+            <div class="nom">{{ personne.nom }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    {% else %}
+      <p style="text-align:center;color:var(--sourdine);">
+        La présentation de l'équipe sera bientôt disponible.
+      </p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

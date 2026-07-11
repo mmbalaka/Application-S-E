@@ -1,0 +1,29 @@
+{% extends "vitrine/base.html" %}
+
+{% block titre %}Accéder à l'application — Lumière du Soleil{% endblock %}
+
+{% block contenu %}
+<section class="bandeau-page">
+  <div class="conteneur">
+    <h1>Accéder à l'application</h1>
+    <p>La plateforme de suivi-évaluation est réservée aux utilisateurs autorisés.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    <div class="options-acces">
+      <a class="option-acces" href="{% url 'vitrine:connexion' %}">
+        <div class="icone">🔑</div>
+        <h3>Se connecter</h3>
+        <p>Vous avez déjà un compte ? Connectez-vous pour accéder à vos tableaux de bord et formulaires.</p>
+      </a>
+      <a class="option-acces" href="{% url 'vitrine:demande_compte' %}">
+        <div class="icone">📝</div>
+        <h3>Demander un compte</h3>
+        <p>Pas encore de compte ? Envoyez une demande — elle sera examinée par l'administrateur.</p>
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "vitrine/base.html" %}
+
+{% block titre %}Nos projets — Lumière du Soleil{% endblock %}
+
+{% block contenu %}
+<section class="bandeau-page">
+  <div class="conteneur">
+    <h1>Nos projets</h1>
+    <p>Aperçu des projets suivis par l'association. Les données détaillées sont réservées à la plateforme.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    {% if projets %}
+    <div class="grille">
+      {% for projet in projets %}
+      <div class="carte">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <span style="font-size:12.5px;font-weight:700;letter-spacing:1px;color:var(--sourdine);">{{ projet.code }}</span>
+          <span class="badge badge-{{ projet.statut }}">{{ projet.get_statut_display }}</span>
+        </div>
+        <h3>{{ projet.nom }}</h3>
+        {% if projet.domaine %}
+        <p style="font-size:13px;color:var(--coral-fonce);font-weight:600;margin-bottom:6px;">{{ projet.domaine }}</p>
+        {% endif %}
+        {% if projet.description %}
+        <p>{{ projet.description|truncatewords:30 }}</p>
+        {% endif %}
+        {% if projet.date_debut %}
+        <p style="font-size:13px;margin-top:10px;color:var(--sourdine);">
+          📅 {{ projet.date_debut|date:"Y" }}{% if projet.date_fin %} – {{ projet.date_fin|date:"Y" }}{% endif %}
+        </p>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align:center;padding:40px 0;color:var(--sourdine);">
+      <div style="font-size:44px;margin-bottom:12px;">🌱</div>
+      <p>Les fiches de nos projets seront publiées ici très prochainement.</p>
+    </div>
+    {% endif %}
+
+    <div class="cta-bande" style="margin-top:50px;">
+      <h2>Suivez la performance en temps réel</h2>
+      <p>Les indicateurs, taux de réalisation et rapports détaillés sont disponibles dans l'application, pour les utilisateurs autorisés.</p>
+      <a class="btn" href="{% url 'vitrine:acces' %}">Accéder à l'application</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

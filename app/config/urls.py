@@ -7,7 +7,8 @@ from django.urls import include, path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),  # bascule de langue (set_language)
-    path("", include("suivi.urls")),
+    path("app/", include("suivi.urls")),  # l'application S&E (accès restreint)
+    path("", include("vitrine.urls")),  # le site vitrine public
 ]
 
 # Fichiers téléversés (sources de vérification) — servis par Django en développement

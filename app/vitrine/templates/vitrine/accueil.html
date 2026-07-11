@@ -1,0 +1,103 @@
+{% extends "vitrine/base.html" %}
+
+{% block titre %}Lumière du Soleil — Association de développement communautaire{% endblock %}
+
+{% block contenu %}
+
+<!-- Héros : message clé + appels à l'action -->
+<section class="heros">
+  <div class="conteneur">
+    <div class="surtitre">Association Lumière du Soleil</div>
+    <h1>Agir pour les communautés,<br><span class="accent">mesurer</span> ce qui change vraiment.</h1>
+    <p class="grand">
+      Nous menons des projets de développement dans l'agriculture, l'environnement,
+      l'éducation et la santé — et nous suivons chaque résultat avec rigueur grâce
+      à notre plateforme de suivi-évaluation.
+    </p>
+    <div class="actions">
+      <a class="btn btn-plein" href="{% url 'vitrine:apropos' %}">Découvrir l'association</a>
+      <a class="btn btn-contour" href="{% url 'vitrine:acces' %}">Accéder à l'application</a>
+    </div>
+  </div>
+</section>
+
+<!-- Chiffres clés (issus de la base de données, non confidentiels) -->
+<div class="chiffres">
+  <div class="chiffre">
+    <div class="valeur">{{ nb_projets }}</div>
+    <div class="libelle">projet{{ nb_projets|pluralize }} suivi{{ nb_projets|pluralize }}</div>
+  </div>
+  <div class="chiffre">
+    <div class="valeur">{{ nb_indicateurs }}</div>
+    <div class="libelle">indicateur{{ nb_indicateurs|pluralize }} de performance</div>
+  </div>
+  <div class="chiffre">
+    <div class="valeur">6</div>
+    <div class="libelle">domaines d'intervention</div>
+  </div>
+</div>
+
+<!-- Domaines d'intervention -->
+<section class="section">
+  <div class="conteneur">
+    <div class="section-titre">
+      <h2>Nos domaines d'intervention</h2>
+      <p>Six secteurs complémentaires au service du développement des communautés.</p>
+    </div>
+    <div class="grille">
+      {% for icone, titre, texte in domaines %}
+      <div class="carte">
+        <div class="icone">{{ icone }}</div>
+        <h3>{{ titre }}</h3>
+        <p>{{ texte }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Notre approche S&E -->
+<section class="section fond-creme">
+  <div class="conteneur">
+    <div class="section-titre">
+      <h2>La transparence au cœur de notre action</h2>
+      <p>
+        Chaque projet possède son cadre de mesure de la performance :
+        des indicateurs précis, des cibles claires, des résultats vérifiables.
+      </p>
+    </div>
+    <div class="etapes">
+      <div class="etape">
+        <div class="num">1</div>
+        <h3>Collecter</h3>
+        <p>Nos équipes de terrain saisissent les réalisations à chaque période, avec leurs justificatifs archivés.</p>
+      </div>
+      <div class="etape">
+        <div class="num">2</div>
+        <h3>Mesurer</h3>
+        <p>Les taux de réalisation, écarts et alertes se calculent automatiquement par rapport aux cibles.</p>
+      </div>
+      <div class="etape">
+        <div class="num">3</div>
+        <h3>Rendre compte</h3>
+        <p>Des tableaux de bord et rapports fiables, consolidés du projet jusqu'à la coordination.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Appel à l'action final -->
+<section class="section">
+  <div class="conteneur">
+    <div class="cta-bande">
+      <h2>Partenaire, bailleur ou membre de l'équipe ?</h2>
+      <p>
+        Accédez à la plateforme de suivi-évaluation pour consulter les indicateurs,
+        saisir les réalisations ou suivre la performance des projets.
+      </p>
+      <a class="btn" href="{% url 'vitrine:acces' %}">Accéder à l'application</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

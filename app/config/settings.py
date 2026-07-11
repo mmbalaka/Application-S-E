@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "suivi",
+    "vitrine",
 ]
 
 MIDDLEWARE = [
@@ -133,5 +134,11 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Redirections de connexion
-LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/connexion/"
+LOGIN_REDIRECT_URL = "/app/"
 LOGOUT_REDIRECT_URL = "/"
+
+# E-mails : en développement, les messages s'affichent dans la console.
+# À remplacer par un vrai serveur SMTP lors du déploiement en ligne.
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "Lumière du Soleil <no-reply@lumieredusoleil.org>"

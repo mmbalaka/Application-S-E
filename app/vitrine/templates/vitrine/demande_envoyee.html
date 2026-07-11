@@ -1,0 +1,23 @@
+{% extends "vitrine/base.html" %}
+
+{% block titre %}Demande envoyée — Lumière du Soleil{% endblock %}
+
+{% block contenu %}
+<section class="section" style="padding-top:90px;">
+  <div class="conteneur">
+    <div class="form-carte" style="text-align:center;">
+      <div style="font-size:52px;margin-bottom:14px;">✅</div>
+      <h2>Votre demande a été envoyée</h2>
+      <p style="color:var(--sourdine);margin:14px 0 6px;">
+        Merci, <strong>{{ demande.nom }}</strong>. Votre demande d'accès a bien été transmise
+        à l'administrateur.
+      </p>
+      <p style="color:var(--sourdine);margin-bottom:24px;">
+        Vous recevrez un e-mail à <strong>{{ demande.email }}</strong> après validation
+        par l'administrateur.
+      </p>
+      <a class="btn btn-contour" href="{% url 'vitrine:accueil' %}">Retour à l'accueil</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
