@@ -510,3 +510,71 @@ msgstr "Change my password"
 
 msgid "Définir un mot de passe personnel et sécurisé."
 msgstr "Set a personal, secure password."
+
+# ── Tableau de bord ───────────────────────────────────────
+
+msgid "Site public"
+msgstr "Public website"
+
+msgid "Mot de passe"
+msgstr "Password"
+
+msgid "Bonjour %(nom)s — vue d'ensemble de la performance des projets."
+msgstr "Hello %(nom)s — overview of project performance."
+
+msgid "Aucun indicateur pour l'instant."
+msgstr "No indicators yet."
+
+msgid "Commencez par créer vos projets et leurs indicateurs, puis saisissez cibles et réalisations : le tableau de bord s'animera automatiquement."
+msgstr "Start by creating your projects and their indicators, then enter targets and achievements: the dashboard will come to life automatically."
+
+msgid "Ouvrir l'administration"
+msgstr "Open administration"
+
+msgid "Projets"
+msgstr "Projects"
+
+msgid "Indicateurs"
+msgstr "Indicators"
+
+msgid "Indicateurs suivis"
+msgstr "Tracked indicators"
+
+msgid "sans données pour l'instant"
+msgstr "without data yet"
+
+msgid "Taux de réalisation global"
+msgstr "Overall achievement rate"
+
+msgid "moyenne des taux cumulés"
+msgstr "average of cumulative rates"
+
+msgid "Indicateurs en alerte"
+msgstr "Indicators in alert"
+
+msgid "taux sous le seuil orange"
+msgstr "rate below the orange threshold"
+
+msgid "Répartition des indicateurs mesurés"
+msgstr "Distribution of measured indicators"
+
+msgid "Performance par projet"
+msgstr "Performance by project"
+
+msgid "Taux moyen"
+msgstr "Average rate"
+
+msgid "sans données"
+msgstr "no data"
+
+msgid "Indicateurs en retard"
+msgstr "Indicators behind"
+
+msgid "Aucun indicateur en retard."
+msgstr "No indicator behind."
+
+msgid "Portefeuilles des directeurs"
+msgstr "Directors' portfolios"
+
+msgid "projet(s)"
+msgstr "project(s)"

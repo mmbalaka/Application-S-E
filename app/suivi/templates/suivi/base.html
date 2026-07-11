@@ -7,36 +7,58 @@
 <title>{% block titre %}{% trans "Lumière du Soleil — Suivi & Évaluation" %}{% endblock %}</title>
 <style>
   :root{
-    --coral:#cc785c; --coral-active:#a9583e;
+    --coral:#cc785c; --coral-active:#a9583e; --coral-pale:#f7ece7;
     --canvas:#faf9f5; --surface-soft:#f5f0e8; --surface-card:#efe9de;
     --hairline:#e6dfd8; --ink:#141413; --body:#3d3a34; --muted:#73695e;
-    --green:#2f7d44; --amber:#9a6a1f; --red:#b23b3b;
+    --vert:#2f7d44; --orange:#e8a55a; --orange-txt:#9a6a1f; --rouge:#c64545;
   }
   *{box-sizing:border-box;}
-  body{margin:0;background:var(--canvas);color:var(--ink);
+  body{margin:0;background:var(--canvas);color:var(--body);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     line-height:1.5;}
-  header.topbar{display:flex;align-items:center;justify-content:space-between;
-    padding:14px 28px;background:var(--surface-soft);border-bottom:1px solid var(--hairline);}
-  .brand{font-weight:700;letter-spacing:.3px;}
+  header.topbar{display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+    padding:12px 26px;background:var(--surface-soft);border-bottom:1px solid var(--hairline);
+    position:sticky;top:0;z-index:40;}
+  .brand{font-weight:700;letter-spacing:.3px;color:var(--ink);white-space:nowrap;}
   .brand .accent{color:var(--coral);}
-  .lang-switch{display:flex;gap:6px;align-items:center;}
+  nav.appnav{display:flex;gap:2px;flex-wrap:wrap;margin-left:8px;}
+  nav.appnav a{color:var(--body);text-decoration:none;font-size:14px;font-weight:500;
+    padding:6px 12px;border-radius:7px;}
+  nav.appnav a:hover{background:var(--coral-pale);color:var(--coral-active);}
+  nav.appnav a.actif{background:var(--coral);color:#fff;font-weight:600;}
+  .outils{display:flex;gap:10px;align-items:center;margin-left:auto;}
+  .lang-switch{display:flex;gap:5px;align-items:center;}
   .lang-switch button{border:1px solid var(--hairline);background:#fff;border-radius:6px;
-    padding:4px 10px;font-size:13px;cursor:pointer;color:var(--muted);}
+    padding:3px 9px;font-size:12.5px;cursor:pointer;color:var(--muted);}
   .lang-switch button.active{background:var(--coral);border-color:var(--coral);color:#fff;font-weight:600;}
-  main{max-width:1100px;margin:0 auto;padding:36px 24px;}
+  .btn-sortie{border:1px solid var(--hairline);background:#fff;border-radius:7px;
+    padding:5px 12px;font-size:13px;cursor:pointer;color:var(--muted);}
+  .btn-sortie:hover{color:var(--rouge);border-color:var(--rouge);}
+  main{max-width:1150px;margin:0 auto;padding:30px 24px 60px;}
 </style>
 {% block styles %}{% endblock %}
 </head>
 <body>
 <header class="topbar">
-  <div class="brand"><span class="accent">●</span> {% trans "Lumière du Soleil" %} · {% trans "Suivi-évaluation" %}</div>
-  <form action="{% url 'set_language' %}" method="post" class="lang-switch">
-    {% csrf_token %}
-    <input name="next" type="hidden" value="{{ request.get_full_path }}">
-    <button type="submit" name="language" value="fr" {% if LANGUAGE_CODE == 'fr' %}class="active"{% endif %}>FR</button>
-    <button type="submit" name="language" value="en" {% if LANGUAGE_CODE == 'en' %}class="active"{% endif %}>EN</button>
-  </form>
+  <div class="brand"><span class="accent">●</span> {% trans "Lumière du Soleil" %}</div>
+  <nav class="appnav">
+    <a href="/app/" class="actif">{% trans "Tableau de bord" %}</a>
+    {% if user.is_staff %}<a href="/admin/">{% trans "Administration" %}</a>{% endif %}
+    <a href="/">{% trans "Site public" %}</a>
+    <a href="{% url 'vitrine:mot_de_passe' %}">{% trans "Mot de passe" %}</a>
+  </nav>
+  <div class="outils">
+    <form action="{% url 'set_language' %}" method="post" class="lang-switch">
+      {% csrf_token %}
+      <input name="next" type="hidden" value="{{ request.get_full_path }}">
+      <button type="submit" name="language" value="fr" {% if LANGUAGE_CODE == 'fr' %}class="active"{% endif %}>FR</button>
+      <button type="submit" name="language" value="en" {% if LANGUAGE_CODE == 'en' %}class="active"{% endif %}>EN</button>
+    </form>
+    <form action="{% url 'vitrine:deconnexion' %}" method="post" style="margin:0;">
+      {% csrf_token %}
+      <button type="submit" class="btn-sortie">{% trans "Se déconnecter" %}</button>
+    </form>
+  </div>
 </header>
 <main>
 {% block contenu %}{% endblock %}
