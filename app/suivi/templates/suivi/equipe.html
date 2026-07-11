@@ -1,0 +1,104 @@
+{% extends "suivi/base.html" %}
+{% load i18n %}
+
+{% block titre %}{% trans "Équipe" %} — {% trans "Lumière du Soleil" %}{% endblock %}
+
+{% block styles %}
+<style>
+  .grille-equipe{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;}
+  .carte-membre{background:#fff;border:1px solid var(--hairline);border-radius:13px;padding:20px 22px;}
+  .carte-membre .tete{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .carte-membre .avatar{width:42px;height:42px;border-radius:50%;background:var(--coral-pale);
+    color:var(--coral-active);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;flex-shrink:0;}
+  .carte-membre .nom{color:var(--ink);font-weight:700;font-size:15.5px;}
+  .carte-membre .role{font-size:12.5px;color:var(--muted);}
+  .carte-membre ul{list-style:none;margin:0;padding:0;}
+  .carte-membre li{display:flex;justify-content:space-between;align-items:center;gap:8px;
+    padding:7px 0;border-top:1px solid var(--hairline);font-size:13.5px;}
+</style>
+{% endblock %}
+
+{% block contenu %}
+<div class="entete-page">
+  <div>
+    <h1>{% trans "Équipe" %}</h1>
+    <p>{% trans "Directeurs de projet et suivi-évaluateurs, avec la performance de leur périmètre." %}</p>
+  </div>
+</div>
+
+<h2 style="color:var(--coral-active);font-size:14px;text-transform:uppercase;letter-spacing:1.2px;margin:0 0 14px;">
+  {% trans "Directeurs de projet" %} ({{ directeurs|length }})
+</h2>
+{% if directeurs %}
+<div class="grille-equipe" style="margin-bottom:34px;">
+  {% for ligne in directeurs %}
+  <div class="carte-membre">
+    <div class="tete">
+      <div class="avatar">{{ ligne.objet.nom|first|upper }}</div>
+      <div style="flex:1;">
+        <div class="nom">{{ ligne.objet.nom }}</div>
+        <div class="role">
+          {% trans "Directeur de projet" %}
+          {% if ligne.objet.coordinateur %} · {% trans "sous" %} {{ ligne.objet.coordinateur.nom }}{% endif %}
+        </div>
+      </div>
+      {% if ligne.taux is not None %}
+      <span class="badge badge-{{ ligne.couleur }}">{{ ligne.taux }} %</span>
+      {% else %}
+      <span class="badge badge-sans">—</span>
+      {% endif %}
+    </div>
+    <ul>
+      {% for p in ligne.projets %}
+      <li>
+        <a class="lien" href="{% url 'suivi:projet' p.objet.pk %}">{{ p.objet.code }} — {{ p.objet.nom|truncatechars:26 }}</a>
+        {% if p.taux is not None %}
+        <span class="badge badge-{{ p.couleur }}">{{ p.taux }} %</span>
+        {% else %}
+        <span class="badge badge-sans">—</span>
+        {% endif %}
+      </li>
+      {% empty %}
+      <li style="color:var(--muted);">{% trans "Aucun projet pour l'instant." %}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="panneau" style="color:var(--muted);">{% trans "Aucun directeur de projet enregistré." %}</div>
+{% endif %}
+
+<h2 style="color:var(--coral-active);font-size:14px;text-transform:uppercase;letter-spacing:1.2px;margin:0 0 14px;">
+  {% trans "Suivi-évaluateurs" %} ({{ evaluateurs|length }})
+</h2>
+{% if evaluateurs %}
+<div class="grille-equipe">
+  {% for ligne in evaluateurs %}
+  <div class="carte-membre">
+    <div class="tete">
+      <div class="avatar">{{ ligne.objet.nom|first|upper }}</div>
+      <div style="flex:1;">
+        <div class="nom">{{ ligne.objet.nom }}</div>
+        <div class="role">{% trans "Suivi-évaluateur" %} · {{ ligne.projets|length }} {% trans "projet(s)" %}</div>
+      </div>
+      {% if ligne.taux is not None %}
+      <span class="badge badge-{{ ligne.couleur }}">{{ ligne.taux }} %</span>
+      {% else %}
+      <span class="badge badge-sans">—</span>
+      {% endif %}
+    </div>
+    <ul>
+      {% for p in ligne.projets %}
+      <li><a class="lien" href="{% url 'suivi:projet' p.pk %}">{{ p.code }} — {{ p.nom|truncatechars:30 }}</a></li>
+      {% empty %}
+      <li style="color:var(--muted);">{% trans "Aucun projet pour l'instant." %}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="panneau" style="color:var(--muted);">{% trans "Aucun suivi-évaluateur enregistré." %}</div>
+{% endif %}
+{% endblock %}

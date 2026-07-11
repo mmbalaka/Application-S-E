@@ -1,0 +1,65 @@
+{% extends "suivi/base.html" %}
+{% load i18n %}
+
+{% block titre %}{% trans "Projets" %} — {% trans "Lumière du Soleil" %}{% endblock %}
+
+{% block contenu %}
+<div class="entete-page">
+  <div>
+    <h1>{% trans "Tous les projets" %}</h1>
+    <p>{% trans "Performance et alertes de chaque projet — cliquez pour voir le détail et l'évolution." %}</p>
+  </div>
+</div>
+
+{% if lignes %}
+<div class="panneau">
+  <table class="liste">
+    <tr>
+      <th>{% trans "Projet" %}</th>
+      <th>{% trans "Directeur de projet" %}</th>
+      <th>{% trans "Statut" %}</th>
+      <th>{% trans "Indicateurs" %}</th>
+      <th>{% trans "Alertes" %}</th>
+      <th style="width:30%;">{% trans "Taux moyen" %}</th>
+    </tr>
+    {% for ligne in lignes %}
+    <tr>
+      <td>
+        <a class="lien" href="{% url 'suivi:projet' ligne.objet.pk %}">{{ ligne.objet.code }}</a><br>
+        <span style="font-size:13px;color:var(--muted);">{{ ligne.objet.nom|truncatechars:44 }}</span>
+      </td>
+      <td style="font-size:13.5px;">{{ ligne.objet.directeur|default:"—" }}</td>
+      <td><span class="badge badge-sans">{{ ligne.objet.get_statut_display }}</span></td>
+      <td>{{ ligne.nb_indicateurs }}</td>
+      <td>
+        {% if ligne.nb_alertes %}
+        <span class="badge badge-rouge">{{ ligne.nb_alertes }}</span>
+        {% else %}
+        <span style="color:var(--muted);">—</span>
+        {% endif %}
+      </td>
+      <td>
+        {% if ligne.taux is not None %}
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="jauge" style="flex:1;">
+            <div class="fond-{{ ligne.couleur }}" style="width:{% if ligne.taux > 100 %}100{% else %}{{ ligne.taux }}{% endif %}%;"></div>
+          </div>
+          <span class="badge badge-{{ ligne.couleur }}">{{ ligne.taux }} %</span>
+        </div>
+        {% else %}
+        <span class="badge badge-sans">{% trans "sans données" %}</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% else %}
+<div class="panneau" style="text-align:center;color:var(--muted);padding:46px 20px;">
+  <p><strong>{% trans "Aucun projet pour l'instant." %}</strong></p>
+  {% if user.is_staff %}
+  <p><a class="lien" href="/admin/suivi/projet/add/">{% trans "Créer le premier projet" %} →</a></p>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

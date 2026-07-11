@@ -578,3 +578,80 @@ msgstr "Directors' portfolios"
 
 msgid "projet(s)"
 msgstr "project(s)"
+
+# ── Évolution, projets, équipe ────────────────────────────
+
+msgid "Équipe"
+msgstr "Team"
+
+msgid "Évolution du taux de réalisation"
+msgstr "Achievement rate over time"
+
+msgid "moyenne des taux par période"
+msgstr "average rate per period"
+
+msgid "Voir toute l'équipe"
+msgstr "See the whole team"
+
+msgid "Tous les projets"
+msgstr "All projects"
+
+msgid "Performance et alertes de chaque projet — cliquez pour voir le détail et l'évolution."
+msgstr "Performance and alerts for each project — click to see details and trends."
+
+msgid "Directeur de projet"
+msgstr "Project director"
+
+msgid "Statut"
+msgstr "Status"
+
+msgid "Alertes"
+msgstr "Alerts"
+
+msgid "Aucun projet pour l'instant."
+msgstr "No projects yet."
+
+msgid "Créer le premier projet"
+msgstr "Create the first project"
+
+msgid "Équipe du projet"
+msgstr "Project team"
+
+msgid "Coordinateur"
+msgstr "Coordinator"
+
+msgid "Suivi-évaluateurs"
+msgstr "M&E officers"
+
+msgid "Indicateurs du projet"
+msgstr "Project indicators"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Cumul / cible finale"
+msgstr "Cumulative / final target"
+
+msgid "Taux cumulé"
+msgstr "Cumulative rate"
+
+msgid "Indicateur"
+msgstr "Indicator"
+
+msgid "En créer un"
+msgstr "Create one"
+
+msgid "Directeurs de projet"
+msgstr "Project directors"
+
+msgid "sous"
+msgstr "under"
+
+msgid "Aucun directeur de projet enregistré."
+msgstr "No project director registered."
+
+msgid "Aucun suivi-évaluateur enregistré."
+msgstr "No M&E officer registered."
+
+msgid "Directeurs de projet et suivi-évaluateurs, avec la performance de leur périmètre."
+msgstr "Project directors and M&E officers, with the performance of their scope."

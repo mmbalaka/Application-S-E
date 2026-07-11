@@ -1,0 +1,107 @@
+{% extends "suivi/base.html" %}
+{% load i18n %}
+
+{% block titre %}{{ projet.code }} — {% trans "Lumière du Soleil" %}{% endblock %}
+
+{% block contenu %}
+<div class="entete-page">
+  <div>
+    <p style="margin:0 0 4px;"><a class="lien" href="{% url 'suivi:projets' %}">← {% trans "Tous les projets" %}</a></p>
+    <h1>{{ projet.code }} — {{ projet.nom }}</h1>
+    <p>
+      <span class="badge badge-sans">{{ projet.get_statut_display }}</span>
+      {% if projet.domaine %} · {{ projet.domaine }}{% endif %}
+      {% if projet.date_debut %} · 📅 {{ projet.date_debut|date:"m/Y" }}{% if projet.date_fin %} → {{ projet.date_fin|date:"m/Y" }}{% endif %}{% endif %}
+    </p>
+  </div>
+  <div>
+    {% if taux_global is not None %}
+    <span class="badge badge-{{ couleur_globale }}" style="font-size:16px;padding:6px 16px;">{{ taux_global }} %</span>
+    {% endif %}
+  </div>
+</div>
+
+{% if projet.description %}
+<div class="panneau"><p style="margin:0;color:var(--body);">{{ projet.description }}</p></div>
+{% endif %}
+
+<!-- Équipe du projet -->
+<div class="panneau">
+  <h2>👥 {% trans "Équipe du projet" %}</h2>
+  <table class="liste">
+    <tr>
+      <td style="width:220px;color:var(--muted);">{% trans "Directeur de projet" %}</td>
+      <td><strong style="color:var(--ink);">{{ projet.directeur|default:"—" }}</strong></td>
+    </tr>
+    {% if projet.directeur.coordinateur %}
+    <tr>
+      <td style="color:var(--muted);">{% trans "Coordinateur" %}</td>
+      <td><strong style="color:var(--ink);">{{ projet.directeur.coordinateur }}</strong></td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td style="color:var(--muted);">{% trans "Suivi-évaluateurs" %}</td>
+      <td>
+        {% for se in suivi_evaluateurs %}
+        <strong style="color:var(--ink);">{{ se.nom }}</strong>{% if not forloop.last %}, {% endif %}
+        {% empty %}—{% endfor %}
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- Évolution -->
+{% if evolution %}
+<div class="panneau">
+  <h2>📈 {% trans "Évolution du taux de réalisation" %}</h2>
+  <div class="evo">
+    {% for point in evolution %}
+    <div class="evo-col">
+      <div class="evo-val">{{ point.taux }} %</div>
+      <div class="evo-barre"><div class="evo-rempli fond-{{ point.couleur }}" style="height:{{ point.hauteur }}%;"></div></div>
+      <div class="evo-lib">{{ point.libelle }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  <p style="margin:10px 0 0;font-size:12.5px;color:var(--muted);">{% trans "moyenne des taux par période" %}</p>
+</div>
+{% endif %}
+
+<!-- Indicateurs du projet -->
+<div class="panneau">
+  <h2>🎯 {% trans "Indicateurs du projet" %} ({{ indicateurs|length }})</h2>
+  {% if indicateurs %}
+  <table class="liste">
+    <tr>
+      <th>{% trans "Indicateur" %}</th>
+      <th>{% trans "Type" %}</th>
+      <th>{% trans "Cumul / cible finale" %}</th>
+      <th>{% trans "Taux cumulé" %}</th>
+    </tr>
+    {% for ligne in indicateurs %}
+    <tr>
+      <td>
+        <strong style="color:var(--ink);">{% if ligne.objet.code %}{{ ligne.objet.code }} — {% endif %}{{ ligne.objet.intitule|truncatechars:52 }}</strong><br>
+        <span style="font-size:12.5px;color:var(--muted);">{{ ligne.objet.unite }} · {{ ligne.objet.get_frequence_display }}</span>
+      </td>
+      <td style="font-size:13px;">{{ ligne.objet.get_niveau_display }}</td>
+      <td style="font-size:13.5px;">
+        {{ ligne.cumul|default:"—" }} / {{ ligne.objet.cible_finale|default:"—" }}
+      </td>
+      <td>
+        {% if ligne.taux is not None %}
+        <span class="badge badge-{{ ligne.couleur }}">{{ ligne.taux }} %</span>
+        {% else %}
+        <span class="badge badge-sans">{% trans "sans données" %}</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p style="color:var(--muted);margin:0;">{% trans "Aucun indicateur pour l'instant." %}
+    {% if user.is_staff %}<a class="lien" href="/admin/suivi/indicateur/add/">{% trans "En créer un" %} →</a>{% endif %}
+  </p>
+  {% endif %}
+</div>
+{% endblock %}

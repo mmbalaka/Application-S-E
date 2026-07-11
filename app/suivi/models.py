@@ -72,6 +72,13 @@ class SuiviEvaluateur(PersonneBase):
         verbose_name = _("suivi-évaluateur")
         verbose_name_plural = _("suivi-évaluateurs")
 
+    @property
+    def taux_moyen(self):
+        """Taux moyen des indicateurs des projets qu'il suit."""
+        return _taux_moyen(
+            Indicateur.objects.filter(projet__suivi_evaluateurs=self, actif=True)
+        )
+
 
 class Projet(models.Model):
     """Projet mis en œuvre par l'association."""
