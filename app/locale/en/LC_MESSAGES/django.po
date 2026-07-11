@@ -478,3 +478,29 @@ msgstr "Row %(n)s: missing title — skipped."
 
 msgid "%(projet)s : %(crees)s indicateur(s) créé(s), %(maj)s mis à jour."
 msgstr "%(projet)s: %(crees)s indicator(s) created, %(maj)s updated."
+
+# ── Page d'entrée de l'application ────────────────────────
+
+msgid "Connecté en tant que"
+msgstr "Signed in as"
+
+msgid "Tableau de bord"
+msgstr "Dashboard"
+
+msgid "Bientôt disponible — prochaine étape du développement."
+msgstr "Coming soon — next development step."
+
+msgid "Administration"
+msgstr "Administration"
+
+msgid "Projets, indicateurs, cibles, réalisations, demandes de compte."
+msgstr "Projects, indicators, targets, achievements, account requests."
+
+msgid "Site de l'association"
+msgstr "Association website"
+
+msgid "Retourner au site vitrine public."
+msgstr "Back to the public website."
+
+msgid "Se déconnecter"
+msgstr "Log out"

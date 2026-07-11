@@ -134,7 +134,9 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Redirections de connexion
-LOGIN_URL = "/connexion/"
+# Un visiteur non connecté qui tente d'ouvrir l'application est envoyé
+# vers la page « Se connecter ou demander un compte ».
+LOGIN_URL = "/acces/"
 LOGIN_REDIRECT_URL = "/app/"
 LOGOUT_REDIRECT_URL = "/"
 
