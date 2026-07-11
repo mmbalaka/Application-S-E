@@ -14,7 +14,7 @@
   <div class="conteneur">
     <div class="form-carte">
       <h2>Se connecter</h2>
-      <p class="sous-titre">Utilisez l'identifiant qui vous a été communiqué (votre adresse e-mail).</p>
+      <p class="sous-titre">Connectez-vous avec votre identifiant ou votre adresse e-mail.</p>
 
       {% if form.errors %}
       <div class="message error" style="margin-bottom:16px;">
@@ -25,7 +25,7 @@
       <form method="post">
         {% csrf_token %}
         <p>
-          <label for="id_username">Identifiant (adresse e-mail)</label>
+          <label for="id_username">Identifiant ou adresse e-mail</label>
           <input type="text" name="username" id="id_username" required autofocus>
         </p>
         <p>

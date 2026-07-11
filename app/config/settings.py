@@ -133,6 +133,11 @@ STATIC_URL = "static/"
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# Connexion par identifiant OU adresse e-mail
+AUTHENTICATION_BACKENDS = [
+    "vitrine.backends.IdentifiantOuEmailBackend",
+]
+
 # Redirections de connexion
 # Un visiteur non connecté qui tente d'ouvrir l'application est envoyé
 # vers la page « Se connecter ou demander un compte ».
