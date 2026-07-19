@@ -6,6 +6,9 @@
 {% block extrahead %}{{ block.super }}
 <link rel="icon" type="image/png" href="{% static 'vitrine/favicon.png' %}">
 <style>
+  /* Toujours en thème clair, même si l'ordinateur est en mode sombre */
+  html { color-scheme: light; }
+
   /* Charte Lumière du Soleil appliquée à l'administration Django */
   :root {
     --primary: #1b5e20;
@@ -30,6 +33,24 @@
     --selected-bg: #eaf3e6;
     --selected-row: #f4f9f0;
   }
+  /* Neutralise le thème sombre de Django : fonds blancs, texte foncé */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --body-bg: #ffffff;
+      --body-fg: #303030;
+      --body-quiet-color: #5a5a5a;
+      --body-loud-color: #000000;
+      --module-bg: #ffffff;
+      --darkened-bg: #f4f8f0;
+      --hairline-color: #e6ebe1;
+      --border-color: #dde3d8;
+      --close-button-bg: #6b7566;
+      --close-button-hover-bg: #55604f;
+      --selected-bg: #eaf3e6;
+      --selected-row: #f4f9f0;
+    }
+  }
+  body { background: #ffffff; }
   #branding img { height: 34px; width: auto; vertical-align: middle; margin-right: 10px; }
   #site-name a { display: inline-flex; align-items: center; }
 </style>
