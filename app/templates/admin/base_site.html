@@ -9,7 +9,9 @@
   /* Toujours en thème clair, même si l'ordinateur est en mode sombre */
   html { color-scheme: light; }
 
-  /* Charte Lumière du Soleil appliquée à l'administration Django */
+  /* Charte Lumière du Soleil + fond VERT CLAIR forcé (même en mode sombre).
+     Le !important garantit la priorité sur le thème sombre de Django,
+     quel que soit l'ordre de chargement des feuilles de style. */
   :root {
     --primary: #1b5e20;
     --secondary: #14532d;
@@ -30,27 +32,47 @@
     --default-button-hover-bg: #0e3d1f;
     --object-tools-bg: #14532d;
     --object-tools-hover-bg: #1b5e20;
-    --selected-bg: #eaf3e6;
-    --selected-row: #f4f9f0;
+
+    /* Fonds clairs, appliqués en priorité */
+    --body-bg: #eef5e9 !important;        /* fond de page : vert clair */
+    --body-fg: #2c3a28 !important;         /* texte foncé lisible */
+    --body-quiet-color: #5a6a54 !important;
+    --body-loud-color: #14532d !important;
+    --module-bg: #ffffff !important;       /* boîtes/tableaux : blanc */
+    --darkened-bg: #e3eedd !important;     /* entêtes de colonnes */
+    --hairline-color: #d6e2cd !important;
+    --border-color: #d0dcc6 !important;
+    --close-button-bg: #6b7566 !important;
+    --close-button-hover-bg: #55604f !important;
+    --selected-bg: #eaf3e6 !important;
+    --selected-row: #f4f9f0 !important;
+    --message-success-bg: #e5f2e8 !important;
   }
-  /* Neutralise le thème sombre de Django : fonds blancs, texte foncé */
+  /* Rappel de la même règle dans le contexte « mode sombre » du système */
   @media (prefers-color-scheme: dark) {
     :root {
-      --body-bg: #ffffff;
-      --body-fg: #303030;
-      --body-quiet-color: #5a5a5a;
-      --body-loud-color: #000000;
-      --module-bg: #ffffff;
-      --darkened-bg: #f4f8f0;
-      --hairline-color: #e6ebe1;
-      --border-color: #dde3d8;
-      --close-button-bg: #6b7566;
-      --close-button-hover-bg: #55604f;
-      --selected-bg: #eaf3e6;
-      --selected-row: #f4f9f0;
+      --body-bg: #eef5e9 !important;
+      --body-fg: #2c3a28 !important;
+      --body-quiet-color: #5a6a54 !important;
+      --body-loud-color: #14532d !important;
+      --module-bg: #ffffff !important;
+      --darkened-bg: #e3eedd !important;
+      --hairline-color: #d6e2cd !important;
+      --border-color: #d0dcc6 !important;
+      --close-button-bg: #6b7566 !important;
+      --close-button-hover-bg: #55604f !important;
+      --selected-bg: #eaf3e6 !important;
+      --selected-row: #f4f9f0 !important;
     }
   }
-  body { background: #ffffff; }
+  /* Fonds appliqués directement, en secours, sur les grands blocs */
+  body, #container, #content, .main, .colM, #content-main {
+    background-color: #eef5e9 !important;
+    color: #2c3a28 !important;
+  }
+  .module, #changelist .results, #changelist table, #content-main .module {
+    background-color: #ffffff !important;
+  }
   #branding img { height: 34px; width: auto; vertical-align: middle; margin-right: 10px; }
   #site-name a { display: inline-flex; align-items: center; }
 </style>
