@@ -7,8 +7,10 @@ from django.utils.translation import gettext_lazy as _
 from django.shortcuts import redirect, render
 from django.urls import path
 
+from django.http import HttpResponse
+
 from .forms import ImportIndicateursForm
-from .importation import importer_indicateurs
+from .importation import importer_indicateurs, modele_csv_indicateurs
 from .models import (
     AxeDesagregation,
     Cible,
@@ -224,12 +226,14 @@ class IndicateurAdmin(ScopeProjetAdmin):
         "cible_finale",
         "cumul",
         "taux_cumule",
+        "mode_creation",
         "actif",
     )
-    list_filter = ("projet", "niveau", "frequence", "actif")
+    list_filter = ("projet", "niveau", "frequence", "mode_creation", "actif")
     search_fields = ("code", "intitule", "definition")
     inlines = [CibleInline, RealisationInline]
     filter_horizontal = ("desagregations",)
+    readonly_fields = ("mode_creation", "date_creation")
     fieldsets = (
         (None, {"fields": ("projet", "code", "intitule", "definition", "niveau", "actif")}),
         (
@@ -259,6 +263,10 @@ class IndicateurAdmin(ScopeProjetAdmin):
                 ),
             },
         ),
+        (
+            _("Traçabilité"),
+            {"fields": ("mode_creation", "date_creation"), "classes": ("collapse",)},
+        ),
     )
 
     # ── Import CSV / Excel ──
@@ -270,7 +278,18 @@ class IndicateurAdmin(ScopeProjetAdmin):
                 self.admin_site.admin_view(self.vue_import),
                 name="suivi_indicateur_importer",
             ),
+            path(
+                "modele-csv/",
+                self.admin_site.admin_view(self.telecharger_modele),
+                name="suivi_indicateur_modele",
+            ),
         ] + urls
+
+    def telecharger_modele(self, request):
+        """Télécharge un modèle CSV pré-rempli (indicateurs candidats du projet)."""
+        reponse = HttpResponse(modele_csv_indicateurs(), content_type="text/csv; charset=utf-8")
+        reponse["Content-Disposition"] = 'attachment; filename="modele-indicateurs.csv"'
+        return reponse
 
     def vue_import(self, request):
         """Téléversement d'une liste d'indicateurs pour un projet."""

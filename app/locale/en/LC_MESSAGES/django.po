@@ -663,3 +663,32 @@ msgstr "login account"
 
 msgid "Compte utilisé par cette personne pour se connecter à l'application."
 msgstr "Account used by this person to sign in to the application."
+
+# ── Traçabilité & import des indicateurs ──────────────────
+
+msgid "mode de création"
+msgstr "creation mode"
+
+msgid "Saisie manuelle"
+msgstr "Manual entry"
+
+msgid "Import groupé"
+msgstr "Bulk import"
+
+msgid "date de création"
+msgstr "creation date"
+
+msgid "Traçabilité"
+msgstr "Traceability"
+
+msgid "Télécharger le modèle CSV pré-rempli"
+msgstr "Download the pre-filled CSV template"
+
+msgid "Complétez les colonnes baseline et cible finale, puis importez le fichier ci-dessous."
+msgstr "Fill in the baseline and final target columns, then import the file below."
+
+msgid "Ligne %(n)s (« %(t)s ») : valeur de référence ou cible non numérique — ligne ignorée."
+msgstr "Row %(n)s (\"%(t)s\"): non-numeric baseline or target — row skipped."
+
+msgid "Ligne %(n)s (« %(t)s ») : cible finale absente — indicateur créé, mais aucun taux ne sera calculé tant qu'elle n'est pas renseignée."
+msgstr "Row %(n)s (\"%(t)s\"): missing final target — indicator created, but no rate will be computed until it is set."

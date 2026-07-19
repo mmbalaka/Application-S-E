@@ -4,6 +4,13 @@
 {% block content %}
 <h1>{% trans "Importer des indicateurs (CSV ou Excel)" %}</h1>
 
+<p style="margin:10px 0 18px;">
+  <a class="button" href="../modele-csv/" style="background:#cc785c;color:#fff;">
+    ⬇ {% trans "Télécharger le modèle CSV pré-rempli" %}
+  </a>
+  <span style="color:#666;margin-left:8px;">{% trans "Complétez les colonnes baseline et cible finale, puis importez le fichier ci-dessous." %}</span>
+</p>
+
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}

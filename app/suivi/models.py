@@ -293,10 +293,32 @@ class Indicateur(models.Model):
     )
     actif = models.BooleanField(_("actif"), default=True)
 
+    # ── Traçabilité : mode et date de création (pour le reporting) ──
+    class ModeCreation(models.TextChoices):
+        MANUEL = "manuel", _("Saisie manuelle")
+        IMPORT = "import", _("Import groupé")
+
+    mode_creation = models.CharField(
+        _("mode de création"),
+        max_length=10,
+        choices=ModeCreation.choices,
+        default=ModeCreation.MANUEL,
+    )
+    date_creation = models.DateTimeField(_("date de création"), auto_now_add=True, null=True)
+
     class Meta:
         verbose_name = _("indicateur")
         verbose_name_plural = _("indicateurs")
         ordering = ["projet", "code", "intitule"]
+        constraints = [
+            # Anti-doublon : un même code ne peut exister deux fois dans un projet
+            # (s'applique uniquement quand un code est renseigné).
+            models.UniqueConstraint(
+                fields=["projet", "code"],
+                condition=~models.Q(code=""),
+                name="indicateur_code_unique_par_projet",
+            )
+        ]
 
     def __str__(self):
         prefixe = f"{self.code} — " if self.code else ""

@@ -119,6 +119,14 @@ def _nombre(valeur):
         return None
 
 
+def _parse_nombre(texte):
+    """Retourne (valide, valeur). Vide => (True, None) ; illisible => (False, None)."""
+    if texte in (None, ""):
+        return True, None
+    valeur = _nombre(texte)
+    return (valeur is not None), valeur
+
+
 def _lignes_csv(fichier):
     """Itère les lignes d'un fichier CSV (détection , ou ;)."""
     brut = fichier.read()
@@ -142,6 +150,48 @@ def _lignes_xlsx(fichier):
     classeur = openpyxl.load_workbook(fichier, read_only=True, data_only=True)
     feuille = classeur.worksheets[0]
     return [[cellule for cellule in ligne] for ligne in feuille.iter_rows(values_only=True)]
+
+
+# Indicateurs candidats validés (dérivés de la théorie du changement du dossier).
+# baseline et cible restent VIDES : à compléter par le directeur.
+MODELE_INDICATEURS = [
+    # code, intitulé, type, unité, fréquence, moyen de vérification
+    ("INT-01", "Budget mobilisé / dépensé", "intrant", "€", "trimestrielle", "Comptabilité du projet"),
+    ("INT-02", "Parcelles pilotes mises à disposition", "intrant", "nombre", "annuelle", "Conventions de mise à disposition"),
+    ("INT-03", "Partenaires engagés (accords signés)", "intrant", "nombre", "semestrielle", "Accords de partenariat"),
+    ("PRO-01", "Protocoles d'élevage développés et testés", "processus", "nombre", "trimestrielle", "Rapports techniques"),
+    ("PRO-02", "Substrats agroforestiers caractérisés", "processus", "nombre", "trimestrielle", "Analyses biochimiques (labo)"),
+    ("PRO-03", "Sessions de formation / sensibilisation tenues", "processus", "nombre", "trimestrielle", "Feuilles de présence"),
+    ("PRO-04", "Études réalisées (marché, acceptabilité, socio-éco)", "processus", "nombre", "semestrielle", "Rapports d'étude"),
+    ("PRD-01", "Sites pilotes d'élevage fonctionnels", "produit", "nombre", "semestrielle", "Visites de terrain, photos"),
+    ("PRD-02", "Espèces d'insectes élevées avec succès", "produit", "nombre", "semestrielle", "Fiches de suivi d'élevage"),
+    ("PRD-03", "Prototypes de produits (alimentaires / cosmétiques)", "produit", "nombre", "semestrielle", "Échantillons, tests sensoriels"),
+    ("PRD-04", "Personnes formées", "produit", "nombre", "trimestrielle", "Listes de présence"),
+    ("PRD-05", "Compte satellite des insectes comestibles mis en place", "produit", "%", "semestrielle", "Base de données livrée"),
+    ("EFF-01", "Bénéficiaires directs de l'innovation", "effet", "nombre", "semestrielle", "Registre des bénéficiaires"),
+    ("EFF-02", "Part de femmes et de jeunes parmi les bénéficiaires", "effet", "%", "semestrielle", "Registre désagrégé"),
+    ("EFF-03", "Production d'insectes par unité", "effet", "kg", "trimestrielle", "Relevés de production"),
+    ("EFF-04", "Revenu additionnel des ménages bénéficiaires", "effet", "monnaie locale", "annuelle", "Enquêtes ménages"),
+    ("IMP-01", "Ménages à sécurité alimentaire améliorée", "impact", "nombre", "annuelle", "Enquêtes de suivi"),
+    ("IMP-02", "Émissions de GES évitées (vs élevage conventionnel)", "impact", "t CO2 eq", "annuelle", "Compte satellite / calcul"),
+    ("IMP-03", "Portée potentielle de l'innovation", "impact", "personnes", "annuelle", "Projection"),
+]
+
+MODELE_ENTETES = [
+    "code", "intitulé", "type", "unité", "baseline", "cible finale",
+    "fréquence", "méthode de collecte", "source de données", "moyen de vérification",
+]
+
+
+def modele_csv_indicateurs():
+    """Génère le contenu CSV du modèle pré-rempli (baseline/cible à compléter)."""
+    sortie = io.StringIO()
+    ecrivain = csv.writer(sortie, delimiter=";")
+    ecrivain.writerow(MODELE_ENTETES)
+    for code, intitule, type_, unite, freq, moyen in MODELE_INDICATEURS:
+        ecrivain.writerow([code, intitule, type_, unite, "", "", freq, "", "", moyen])
+    # BOM UTF-8 pour un affichage correct dans Excel
+    return "﻿" + sortie.getvalue()
 
 
 def importer_indicateurs(projet, fichier, nom_fichier):
@@ -202,12 +252,27 @@ def importer_indicateurs(projet, fichier, nom_fichier):
         frequence = FREQUENCES.get(_normaliser(valeur_de("frequence")))
         if frequence:
             champs["frequence"] = frequence
-        baseline = _nombre(valeur_de("baseline"))
+
+        # Validation des valeurs numériques : une valeur présente mais illisible
+        # met la ligne en erreur (ignorée) sans bloquer les lignes valides.
+        ok_base, baseline = _parse_nombre(valeur_de("baseline"))
+        ok_cible, cible_finale = _parse_nombre(valeur_de("cible_finale"))
+        if not ok_base or not ok_cible:
+            erreurs.append(
+                _("Ligne %(n)s (« %(t)s ») : valeur de référence ou cible non numérique — ligne ignorée.")
+                % {"n": numero, "t": intitule[:40]}
+            )
+            continue
         if baseline is not None:
             champs["baseline"] = baseline
-        cible_finale = _nombre(valeur_de("cible_finale"))
         if cible_finale is not None:
             champs["cible_finale"] = cible_finale
+        # Cohérence : cible finale recommandée (sinon aucun taux ne pourra se calculer)
+        if cible_finale is None:
+            erreurs.append(
+                _("Ligne %(n)s (« %(t)s ») : cible finale absente — indicateur créé, mais aucun taux ne sera calculé tant qu'elle n'est pas renseignée.")
+                % {"n": numero, "t": intitule[:40]}
+            )
         # Numérateur/dénominateur renseignés => pourcentage par défaut
         if champs["numerateur_libelle"] and champs["denominateur_libelle"]:
             champs.setdefault("type_valeur", Indicateur.TypeValeur.POURCENTAGE)
@@ -216,6 +281,7 @@ def importer_indicateurs(projet, fichier, nom_fichier):
         champs = {cle: v for cle, v in champs.items() if v not in ("", None)}
 
         # Mise à jour si le code (ou l'intitulé) existe déjà dans ce projet
+        # (garantit qu'un import après une saisie manuelle ne crée pas de doublon).
         existant = None
         if code:
             existant = Indicateur.objects.filter(projet=projet, code=code).first()
@@ -228,11 +294,15 @@ def importer_indicateurs(projet, fichier, nom_fichier):
             existant.intitule = intitule
             if code:
                 existant.code = code
-            existant.save()
+            existant.save()  # le mode_creation d'origine est conservé
             mis_a_jour += 1
         else:
             Indicateur.objects.create(
-                projet=projet, code=code, intitule=intitule, **champs
+                projet=projet,
+                code=code,
+                intitule=intitule,
+                mode_creation=Indicateur.ModeCreation.IMPORT,
+                **champs,
             )
             crees += 1
 
