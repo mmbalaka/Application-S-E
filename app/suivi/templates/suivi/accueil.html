@@ -33,6 +33,7 @@
     <h1>{% trans "Tableau de bord" %}</h1>
     <p>
       {% blocktrans with nom=user.get_full_name|default:user.username %}Bonjour {{ nom }} — vue d'ensemble de la performance des projets.{% endblocktrans %}
+      {% if role_libelle %}<span class="badge badge-sans" style="margin-left:6px;">{{ role_libelle }}</span>{% endif %}
     </p>
   </div>
 </div>

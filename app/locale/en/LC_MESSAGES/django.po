@@ -655,3 +655,11 @@ msgstr "No M&E officer registered."
 
 msgid "Directeurs de projet et suivi-évaluateurs, avec la performance de leur périmètre."
 msgstr "Project directors and M&E officers, with the performance of their scope."
+
+# ── Rôles et comptes de connexion ─────────────────────────
+
+msgid "compte de connexion"
+msgstr "login account"
+
+msgid "Compte utilisé par cette personne pour se connecter à l'application."
+msgstr "Account used by this person to sign in to the application."

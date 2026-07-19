@@ -1,8 +1,17 @@
 """Vues de l'application suivi (accès réservé aux utilisateurs connectés)."""
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 
 from .models import DirecteurProjet, Indicateur, Projet, Realisation, SuiviEvaluateur
+from .roles import projets_accessibles, role
+
+LIBELLES_ROLE = {
+    "admin": "Administrateur",
+    "coordinateur": "Coordinateur",
+    "directeur": "Directeur de projet",
+    "suivi": "Suivi-évaluateur",
+}
 
 
 def _couleur(taux):
@@ -65,8 +74,11 @@ def _stats_indicateurs(indicateurs):
 
 @login_required
 def accueil(request):
-    """Tableau de bord : vue d'ensemble de la performance des projets."""
-    indicateurs = list(Indicateur.objects.filter(actif=True).select_related("projet"))
+    """Tableau de bord : vue d'ensemble filtrée selon le rôle de l'utilisateur."""
+    accessibles = projets_accessibles(request.user)
+    indicateurs = list(
+        Indicateur.objects.filter(actif=True, projet__in=accessibles).select_related("projet")
+    )
     repartition, alertes, taux_global = _stats_indicateurs(indicateurs)
 
     total_mesures = repartition["vert"] + repartition["orange"] + repartition["rouge"]
@@ -83,19 +95,22 @@ def accueil(request):
             "nb_indicateurs": projet.indicateurs.filter(actif=True).count(),
             "taux": projet.taux_moyen,
         }
-        for projet in Projet.objects.all().order_by("code")
+        for projet in accessibles.order_by("code")
     ]
     directeurs = [
         {"objet": d, "nb_projets": d.projets.count(), "taux": d.taux_moyen}
-        for d in DirecteurProjet.objects.filter(actif=True)
+        for d in DirecteurProjet.objects.filter(actif=True, projets__in=accessibles).distinct()
     ]
 
     evolution = _evolution(
-        Realisation.objects.filter(indicateur__actif=True).select_related("indicateur")
+        Realisation.objects.filter(
+            indicateur__actif=True, indicateur__projet__in=accessibles
+        ).select_related("indicateur")
     )
 
     contexte = {
-        "nb_projets": Projet.objects.count(),
+        "role_libelle": LIBELLES_ROLE.get(role(request.user)),
+        "nb_projets": accessibles.count(),
         "nb_indicateurs": len(indicateurs),
         "taux_global": taux_global,
         "repartition": repartition,
@@ -114,7 +129,7 @@ def accueil(request):
 def liste_projets(request):
     """Tous les projets avec leur performance et leur évolution."""
     lignes = []
-    for projet in Projet.objects.select_related("directeur").order_by("code"):
+    for projet in projets_accessibles(request.user).select_related("directeur").order_by("code"):
         indicateurs = list(projet.indicateurs.filter(actif=True))
         repartition, alertes, taux = _stats_indicateurs(indicateurs)
         lignes.append(
@@ -135,6 +150,9 @@ def detail_projet(request, pk):
     projet = get_object_or_404(
         Projet.objects.select_related("directeur__coordinateur"), pk=pk
     )
+    # Un directeur / suivi-évaluateur ne peut ouvrir que ses propres projets.
+    if not projets_accessibles(request.user).filter(pk=pk).exists():
+        raise Http404("Projet non accessible")
     indicateurs = list(projet.indicateurs.filter(actif=True))
     repartition, alertes, taux_global = _stats_indicateurs(indicateurs)
     lignes_indicateurs = [

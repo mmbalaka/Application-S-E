@@ -3,6 +3,7 @@
 Hiérarchie : Coordinateur (1-N) Directeur de projet (1-N) Projet (N-N) Suivi-évaluateur.
 Le nombre de projets et d'intervenants est entièrement libre (aucune limite).
 """
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -14,6 +15,15 @@ class PersonneBase(models.Model):
     email = models.EmailField(_("adresse e-mail"), blank=True)
     telephone = models.CharField(_("téléphone"), max_length=30, blank=True)
     actif = models.BooleanField(_("actif"), default=True)
+    utilisateur = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_("compte de connexion"),
+        related_name="fiche_%(class)s",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        help_text=_("Compte utilisé par cette personne pour se connecter à l'application."),
+    )
 
     class Meta:
         abstract = True

@@ -1,6 +1,7 @@
 """Interface d'administration — gestion des projets et des intervenants."""
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from django.shortcuts import redirect, render
@@ -20,6 +21,52 @@ from .models import (
     SuiviEvaluateur,
     VentilationRealisation,
 )
+from .roles import projets_accessibles, role
+
+
+class ScopeProjetAdmin(admin.ModelAdmin):
+    """Restreint la vue/modification aux objets des projets accessibles au rôle.
+
+    `chemin_projet` : chemin ORM du modèle vers le projet (« pk », « projet »,
+    « indicateur__projet », « realisation__indicateur__projet »).
+    L'administrateur et le coordinateur voient tout ; le directeur et le
+    suivi-évaluateur ne voient que leurs projets. Les verbes autorisés
+    (créer/modifier/supprimer) proviennent des permissions de groupe.
+    """
+
+    chemin_projet = "pk"
+
+    def _accessible(self, request, obj):
+        if obj is None:
+            return True
+        if role(request.user) in ("admin", "coordinateur"):
+            return True
+        filtre = {"pk": obj.pk, f"{self.chemin_projet}__in": projets_accessibles(request.user)}
+        return type(obj).objects.filter(**filtre).exists()
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if role(request.user) in ("admin", "coordinateur"):
+            return qs
+        return qs.filter(**{f"{self.chemin_projet}__in": projets_accessibles(request.user)})
+
+    def has_view_permission(self, request, obj=None):
+        return super().has_view_permission(request, obj) and self._accessible(request, obj)
+
+    def has_change_permission(self, request, obj=None):
+        return super().has_change_permission(request, obj) and self._accessible(request, obj)
+
+    def has_delete_permission(self, request, obj=None):
+        return super().has_delete_permission(request, obj) and self._accessible(request, obj)
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if role(request.user) not in ("admin", "coordinateur"):
+            accessibles = projets_accessibles(request.user)
+            if db_field.name == "projet":
+                kwargs["queryset"] = accessibles
+            elif db_field.name == "indicateur":
+                kwargs["queryset"] = Indicateur.objects.filter(projet__in=accessibles)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 # Couleurs du code visuel (design Lumière du Soleil)
 COULEURS = {"vert": "#2f7d44", "orange": "#e8a55a", "rouge": "#c64545"}
@@ -33,7 +80,7 @@ LIBELLES_STATUT = {
 def badge(taux, seuil_vert=90, seuil_orange=70):
     """Pastille colorée « ● 95 % · Atteint » selon des seuils donnés."""
     if taux is None:
-        return format_html('<span style="color:#999;">—</span>')
+        return mark_safe('<span style="color:#999;">—</span>')
     if taux >= seuil_vert:
         statut = "vert"
     elif taux >= seuil_orange:
@@ -78,7 +125,7 @@ class ProjetInline(admin.TabularInline):
 
 @admin.register(Coordinateur)
 class CoordinateurAdmin(admin.ModelAdmin):
-    list_display = ("nom", "email", "telephone", "nb_directeurs", "performance", "actif")
+    list_display = ("nom", "email", "utilisateur", "nb_directeurs", "performance", "actif")
     list_filter = ("actif",)
     search_fields = ("nom", "email")
     inlines = [DirecteurInline]
@@ -94,7 +141,7 @@ class CoordinateurAdmin(admin.ModelAdmin):
 
 @admin.register(DirecteurProjet)
 class DirecteurProjetAdmin(admin.ModelAdmin):
-    list_display = ("nom", "coordinateur", "email", "nb_projets", "performance", "actif")
+    list_display = ("nom", "coordinateur", "utilisateur", "nb_projets", "performance", "actif")
     list_filter = ("actif", "coordinateur")
     search_fields = ("nom", "email")
     inlines = [ProjetInline]
@@ -110,7 +157,7 @@ class DirecteurProjetAdmin(admin.ModelAdmin):
 
 @admin.register(SuiviEvaluateur)
 class SuiviEvaluateurAdmin(admin.ModelAdmin):
-    list_display = ("nom", "email", "telephone", "nb_projets", "actif")
+    list_display = ("nom", "email", "utilisateur", "nb_projets", "actif")
     list_filter = ("actif",)
     search_fields = ("nom", "email")
 
@@ -120,7 +167,8 @@ class SuiviEvaluateurAdmin(admin.ModelAdmin):
 
 
 @admin.register(Projet)
-class ProjetAdmin(admin.ModelAdmin):
+class ProjetAdmin(ScopeProjetAdmin):
+    chemin_projet = "pk"
     list_display = ("code", "nom", "directeur", "statut", "nb_indicateurs", "performance", "date_debut", "date_fin")
     list_filter = ("statut", "directeur", "suivi_evaluateurs")
     search_fields = ("code", "nom", "description")
@@ -130,6 +178,13 @@ class ProjetAdmin(admin.ModelAdmin):
         (_("Calendrier"), {"fields": ("date_debut", "date_fin")}),
         (_("Responsables"), {"fields": ("directeur", "suivi_evaluateurs")}),
     )
+
+    def get_readonly_fields(self, request, obj=None):
+        ro = list(super().get_readonly_fields(request, obj))
+        # Le directeur peut décrire son projet mais pas se réaffecter ni changer le code.
+        if role(request.user) == "directeur":
+            ro += ["code", "directeur", "suivi_evaluateurs"]
+        return tuple(ro)
 
     @admin.display(description=_("indicateurs"))
     def nb_indicateurs(self, obj):
@@ -158,7 +213,8 @@ class RealisationInline(admin.TabularInline):
 
 
 @admin.register(Indicateur)
-class IndicateurAdmin(admin.ModelAdmin):
+class IndicateurAdmin(ScopeProjetAdmin):
+    chemin_projet = "projet"
     list_display = (
         "code",
         "intitule",
@@ -219,6 +275,9 @@ class IndicateurAdmin(admin.ModelAdmin):
     def vue_import(self, request):
         """Téléversement d'une liste d'indicateurs pour un projet."""
         form = ImportIndicateursForm(request.POST or None, request.FILES or None)
+        # Un directeur ne peut importer que dans ses propres projets.
+        if role(request.user) not in ("admin", "coordinateur"):
+            form.fields["projet"].queryset = projets_accessibles(request.user)
         if request.method == "POST" and form.is_valid():
             projet = form.cleaned_data["projet"]
             fichier = form.cleaned_data["fichier"]
@@ -271,7 +330,8 @@ class VentilationInline(admin.TabularInline):
 
 
 @admin.register(Realisation)
-class RealisationAdmin(admin.ModelAdmin):
+class RealisationAdmin(ScopeProjetAdmin):
+    chemin_projet = "indicateur__projet"
     list_display = (
         "indicateur",
         "periode_affichee",
@@ -326,7 +386,8 @@ class RealisationAdmin(admin.ModelAdmin):
 
 
 @admin.register(Cible)
-class CibleAdmin(admin.ModelAdmin):
+class CibleAdmin(ScopeProjetAdmin):
+    chemin_projet = "indicateur__projet"
     list_display = ("indicateur", "periode_affichee", "valeur")
     list_filter = ("indicateur__projet", "annee")
     search_fields = ("indicateur__intitule", "indicateur__code")
@@ -337,7 +398,8 @@ class CibleAdmin(admin.ModelAdmin):
 
 
 @admin.register(SourceVerification)
-class SourceVerificationAdmin(admin.ModelAdmin):
+class SourceVerificationAdmin(ScopeProjetAdmin):
+    chemin_projet = "realisation__indicateur__projet"
     list_display = ("titre", "realisation", "date_ajout")
     search_fields = ("titre",)
     list_filter = ("date_ajout",)
