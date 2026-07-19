@@ -1,4 +1,5 @@
 {% extends "vitrine/base.html" %}
+{% load static %}
 
 {% block titre %}Lumière du Soleil — Association de développement communautaire{% endblock %}
 
@@ -7,6 +8,8 @@
 <!-- Héros : message clé + appels à l'action -->
 <section class="heros">
   <div class="conteneur">
+    <img src="{% static 'vitrine/logo-embleme.png' %}" alt="Logo Lumière du Soleil"
+         style="width:120px;height:120px;margin:0 auto 18px;display:block;">
     <div class="surtitre">Association Lumière du Soleil</div>
     <h1>Agir pour les communautés,<br><span class="accent">mesurer</span> ce qui change vraiment.</h1>
     <p class="grand">

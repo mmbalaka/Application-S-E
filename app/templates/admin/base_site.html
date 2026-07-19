@@ -1,10 +1,44 @@
 {% extends "admin/base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title }}{% endblock %}
 
+{% block extrahead %}{{ block.super }}
+<link rel="icon" type="image/png" href="{% static 'vitrine/favicon.png' %}">
+<style>
+  /* Charte Lumière du Soleil appliquée à l'administration Django */
+  :root {
+    --primary: #1b5e20;
+    --secondary: #14532d;
+    --accent: #e2a521;
+    --header-bg: #14532d;
+    --header-branding-color: #e2a521;
+    --header-color: #dfeeda;
+    --header-link-color: #ffffff;
+    --breadcrumbs-bg: #1b5e20;
+    --breadcrumbs-fg: #dce5d5;
+    --breadcrumbs-link-fg: #ffffff;
+    --link-fg: #1b5e20;
+    --link-hover-color: #14532d;
+    --link-selected-fg: #14532d;
+    --button-bg: #1b5e20;
+    --button-hover-bg: #14532d;
+    --default-button-bg: #14532d;
+    --default-button-hover-bg: #0e3d1f;
+    --object-tools-bg: #14532d;
+    --object-tools-hover-bg: #1b5e20;
+    --selected-bg: #eaf3e6;
+    --selected-row: #f4f9f0;
+  }
+  #branding img { height: 34px; width: auto; vertical-align: middle; margin-right: 10px; }
+  #site-name a { display: inline-flex; align-items: center; }
+</style>
+{% endblock %}
+
 {% block branding %}
-<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header }}</a></div>
+<div id="site-name"><a href="{% url 'admin:index' %}">
+  <img src="{% static 'vitrine/logo-embleme.png' %}" alt="">{{ site_header }}
+</a></div>
 {% endblock %}
 
 {% block userlinks %}

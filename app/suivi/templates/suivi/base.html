@@ -1,15 +1,18 @@
-{% load i18n %}
+{% load i18n static %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block titre %}{% trans "Lumière du Soleil — Suivi & Évaluation" %}{% endblock %}</title>
+<link rel="icon" type="image/png" href="{% static 'vitrine/favicon.png' %}">
 <style>
   :root{
-    --coral:#cc785c; --coral-active:#a9583e; --coral-pale:#f7ece7;
-    --canvas:#faf9f5; --surface-soft:#f5f0e8; --surface-card:#efe9de;
-    --hairline:#e6dfd8; --ink:#141413; --body:#3d3a34; --muted:#73695e;
+    /* Charte du logo : vert forêt + or soleil */
+    --coral:#1b5e20; --coral-active:#14532d; --coral-pale:#eaf3e6;
+    --canvas:#f8faf5; --surface-soft:#eef3e8; --surface-card:#e6efe0;
+    --hairline:#dce5d5; --ink:#12321d; --body:#33402f; --muted:#6b7566;
+    --or:#e2a521; --or-fonce:#c88e13;
     --vert:#2f7d44; --orange:#e8a55a; --orange-txt:#9a6a1f; --rouge:#c64545;
   }
   *{box-sizing:border-box;}
@@ -19,7 +22,8 @@
   header.topbar{display:flex;align-items:center;gap:18px;flex-wrap:wrap;
     padding:12px 26px;background:var(--surface-soft);border-bottom:1px solid var(--hairline);
     position:sticky;top:0;z-index:40;}
-  .brand{font-weight:700;letter-spacing:.3px;color:var(--ink);white-space:nowrap;}
+  .brand{font-weight:700;letter-spacing:.3px;color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:9px;}
+  .brand img{height:30px;width:auto;}
   .brand .accent{color:var(--coral);}
   nav.appnav{display:flex;gap:2px;flex-wrap:wrap;margin-left:8px;}
   nav.appnav a{color:var(--body);text-decoration:none;font-size:14px;font-weight:500;
@@ -79,7 +83,7 @@
 <body>
 {% with rubrique=request.resolver_match.url_name %}
 <header class="topbar">
-  <div class="brand"><span class="accent">●</span> {% trans "Lumière du Soleil" %}</div>
+  <div class="brand"><img src="{% static 'vitrine/logo-embleme.png' %}" alt=""> {% trans "Lumière du Soleil" %}</div>
   <nav class="appnav">
     <a href="{% url 'suivi:accueil' %}" {% if rubrique == 'accueil' %}class="actif"{% endif %}>{% trans "Tableau de bord" %}</a>
     <a href="{% url 'suivi:projets' %}" {% if rubrique == 'projets' or rubrique == 'projet' %}class="actif"{% endif %}>{% trans "Projets" %}</a>

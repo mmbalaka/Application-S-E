@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Lumière du Soleil — association d'appui au développement : agriculture, environnement, éducation, santé. Suivi-évaluation transparent de nos projets.">
 <title>{% block titre %}Lumière du Soleil — Association de développement{% endblock %}</title>
+<link rel="icon" type="image/png" href="{% static 'vitrine/favicon.png' %}">
 <link rel="stylesheet" href="{% static 'vitrine/style.css' %}">
 </head>
 <body>
@@ -13,7 +14,8 @@
 <header class="entete">
   <div class="entete-inner">
     <a class="logo" href="{% url 'vitrine:accueil' %}">
-      <span class="soleil">☀</span> Lumière du Soleil
+      <img src="{% static 'vitrine/logo-embleme.png' %}" alt="Logo Lumière du Soleil">
+      Lumière du Soleil
     </a>
     <input type="checkbox" id="menu-mobile" class="burger">
     <label for="menu-mobile" class="burger-btn">☰</label>
@@ -47,7 +49,7 @@
 <footer class="pied">
   <div class="pied-grille">
     <div>
-      <span class="logo-pied"><span class="soleil">☀</span> Lumière du Soleil</span>
+      <span class="logo-pied"><img src="{% static 'vitrine/logo-embleme.png' %}" alt="">Lumière du Soleil</span>
       <p>
         Association d'appui au développement communautaire.
         Nous intervenons dans l'agriculture, l'environnement, l'entreprenariat,
