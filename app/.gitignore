@@ -11,5 +11,8 @@ media/
 __pycache__/
 *.pyc
 
+# Fichiers statiques collectés (régénérés au déploiement)
+staticfiles/
+
 # Fichiers de config locaux / secrets
 .env

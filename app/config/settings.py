@@ -10,22 +10,46 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
+def _env_bool(nom, defaut):
+    return os.environ.get(nom, str(defaut)).lower() in ("1", "true", "yes", "oui")
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-4d=)-j)0046qf3c@+hg#+t^&khld6t4ugyzwo3t5sdyoa#jc+!"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# ── Réglages pilotés par l'environnement ──────────────────────────
+# En local (aucune variable définie) : valeurs de développement.
+# En production (Render) : définies via le tableau de bord de l'hébergeur.
 
-ALLOWED_HOSTS = []
+# Clé secrète : valeur locale par défaut, à remplacer en production par
+# la variable d'environnement DJANGO_SECRET_KEY.
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-4d=)-j)0046qf3c@+hg#+t^&khld6t4ugyzwo3t5sdyoa#jc+!",
+)
+
+# DEBUG activé en local, désactivé en production (DJANGO_DEBUG=false).
+DEBUG = _env_bool("DJANGO_DEBUG", True)
+
+# Hôtes autorisés : localhost en dev + le domaine fourni par Render en prod.
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+_hote_render = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if _hote_render:
+    ALLOWED_HOSTS.append(_hote_render)
+_hotes_sup = os.environ.get("DJANGO_ALLOWED_HOSTS", "")
+ALLOWED_HOSTS += [h.strip() for h in _hotes_sup.split(",") if h.strip()]
+
+# Origines de confiance pour le CSRF (formulaires) en HTTPS
+CSRF_TRUSTED_ORIGINS = []
+if _hote_render:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{_hote_render}")
+for _o in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(","):
+    if _o.strip():
+        CSRF_TRUSTED_ORIGINS.append(_o.strip())
 
 
 # Application definition
@@ -43,6 +67,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # sert les fichiers statiques en prod
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",  # bilinguisme FR/EN
     "django.middleware.common.CommonMiddleware",
@@ -76,12 +101,22 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+# En production, Render fournit DATABASE_URL (PostgreSQL) ; en local, SQLite.
+if os.environ.get("DATABASE_URL"):
+    import dj_database_url
+
+    DATABASES = {
+        "default": dj_database_url.config(
+            conn_max_age=600, ssl_require=True
+        )
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 # Password validation
@@ -128,10 +163,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"  # collecte pour la production
+
+# WhiteNoise : compression + cache des fichiers statiques en production
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Fichiers téléversés (sources de vérification)
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+# ── Sécurité renforcée en production (DEBUG = False) ──────────────
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 2592000  # 30 jours
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # Connexion par identifiant OU adresse e-mail
 AUTHENTICATION_BACKENDS = [
@@ -145,7 +199,21 @@ LOGIN_URL = "/acces/"
 LOGIN_REDIRECT_URL = "/app/"
 LOGOUT_REDIRECT_URL = "/"
 
-# E-mails : en développement, les messages s'affichent dans la console.
-# À remplacer par un vrai serveur SMTP lors du déploiement en ligne.
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-DEFAULT_FROM_EMAIL = "Lumière du Soleil <no-reply@lumieredusoleil.org>"
+# E-mails : console en développement. En production, définir un serveur SMTP
+# via les variables EMAIL_HOST / EMAIL_HOST_USER / EMAIL_HOST_PASSWORD.
+if os.environ.get("EMAIL_HOST"):
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = os.environ["EMAIL_HOST"]
+    EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
+    EMAIL_USE_TLS = _env_bool("EMAIL_USE_TLS", True)
+    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = os.environ.get(
+    "DJANGO_DEFAULT_FROM_EMAIL", "Lumière du Soleil <no-reply@lumieredusoleil.org>"
+)
+
+# Administrateurs qui reçoivent les notifications (demandes de compte…)
+_admin_email = os.environ.get("DJANGO_ADMIN_EMAIL", "manamboba.balaka@gmail.com")
+ADMINS = [("Administrateur", _admin_email)]
