@@ -23,9 +23,9 @@
     --breadcrumbs-bg: #1b5e20;
     --breadcrumbs-fg: #dce5d5;
     --breadcrumbs-link-fg: #ffffff;
-    --link-fg: #1b5e20;
-    --link-hover-color: #14532d;
-    --link-selected-fg: #14532d;
+    --link-fg: #1a5aa8 !important;         /* liens en bleu lisible */
+    --link-hover-color: #123a6b !important; /* bleu rivière au survol */
+    --link-selected-fg: #123a6b !important;
     --button-bg: #1b5e20;
     --button-hover-bg: #14532d;
     --default-button-bg: #14532d;
@@ -51,6 +51,9 @@
   /* Rappel de la même règle dans le contexte « mode sombre » du système */
   @media (prefers-color-scheme: dark) {
     :root {
+      --link-fg: #1a5aa8 !important;
+      --link-hover-color: #123a6b !important;
+      --link-selected-fg: #123a6b !important;
       --body-bg: #eef5e9 !important;
       --body-fg: #2c3a28 !important;
       --body-quiet-color: #5a6a54 !important;
@@ -72,6 +75,12 @@
   }
   .module, #changelist .results, #changelist table, #content-main .module {
     background-color: #ffffff !important;
+  }
+  /* Liens du contenu et des barres latérales en bleu lisible (en-tête non affecté) */
+  #content a:link, #content a:visited,
+  #nav-sidebar a:link, #nav-sidebar a:visited,
+  #changelist-filter a:link, #changelist-filter a:visited {
+    color: #1a5aa8 !important;
   }
   #branding img { height: 34px; width: auto; vertical-align: middle; margin-right: 10px; }
   #site-name a { display: inline-flex; align-items: center; }
